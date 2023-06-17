@@ -1,16 +1,15 @@
-import clientPromise from "../../lib/mongodb";
+import { ObjectId } from "mongodb";
+import clientPromise from "../../../lib/mongodb";
 
 export default async function handler(req, res) {
   const { projectId } = req.query;
+  const idr = new ObjectId(projectId);
 
   try {
     const client = await clientPromise;
     const db = client.db("projectcollaborate");
 
-    const project = await db
-      .collection("projects")
-      .findOne({ _id: String(projectId[0]) });
-    console.log(projectId);
+    const project = await db.collection("projects").findOne({ _id: idr });
 
     if (!project) {
       return res.status(404).json({ message: "Project not found" });

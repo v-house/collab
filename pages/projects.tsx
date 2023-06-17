@@ -1,4 +1,5 @@
 import clientPromise from "../lib/mongodb";
+import Link from "next/link";
 
 interface Project {
   _id: string;
@@ -14,17 +15,20 @@ interface ProjectsProps {
 export default function Projects({ projects }: ProjectsProps) {
   return (
     <div>
-      <h1>Top 1000 Movies of All Time</h1>
+      <h1>Projects from all time</h1>
       <p>
-        <small>(According to Metacritic)</small>
+        <small>(All Projects)</small>
       </p>
       <ul>
         {projects.map((project) => (
-          <li>
+          <li key={project._id}>
             <h1>{project.title}</h1>
             <h2>{project._id}</h2>
             <h3>{project.details}</h3>
             <p>{project.deadline}</p>
+            <Link href={`/projects/${project._id}`} legacyBehavior>
+              <a>View Details</a>
+            </Link>
           </li>
         ))}
       </ul>

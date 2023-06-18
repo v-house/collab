@@ -12,7 +12,8 @@ export default async function handler(req, res) {
     const project = await db.collection("projects").findOne({ _id: idr });
 
     if (!project) {
-      return res.status(404).json({ message: "Project not found" });
+      res.status(404).json({ message: "Project not found" });
+      return; // Make sure to return after sending the response
     }
 
     res.status(200).json(project);

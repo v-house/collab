@@ -6,9 +6,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.15",
+    "@heroicons/react": "^2.0.18",
     "axios": "^1.4.0",
     "mongodb": "^4.8.1",
     "next": "latest",
+    "next-auth": "^4.22.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

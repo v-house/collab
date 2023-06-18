@@ -8,7 +8,7 @@ const Navboard = () => {
     const handleScroll = () => {
       const scrollTop =
         window.pageYOffset || document.documentElement.scrollTop;
-      setIsSticky(scrollTop > 50);
+      setIsSticky(scrollTop > 40);
     };
 
     window.addEventListener("scroll", handleScroll);

@@ -5,7 +5,7 @@ export default function SignIn() {
   const router = useRouter();
 
   const handleSignIn = () => {
-    signIn("google", { callbackUrl: router.asPath });
+    signIn("google", { callbackUrl: "/profile" });
   };
 
   return (

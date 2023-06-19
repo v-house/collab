@@ -1,7 +1,9 @@
+import GuestProfile from "./guest-profile";
+
 const profile = () => {
   return (
     <div>
-      <h1>Hello World</h1>
+      <GuestProfile />
     </div>
   );
 };

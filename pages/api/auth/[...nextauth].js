@@ -10,17 +10,11 @@ export default NextAuth({
   ],
   secret: process.env.JWT_SECRET,
   callbacks: {
-    session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
-      }
-      return session;
-    },
     async signIn({ account, profile }) {
       if (account.provider === "google") {
         return profile.email_verified && profile.email.endsWith("@iith.ac.in");
       }
-      return true;
+      return false;
     },
   },
 });

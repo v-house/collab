@@ -1,4 +1,4 @@
-import clientPromise from "../lib/mongodb";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 interface Project {
@@ -20,21 +20,41 @@ interface Project {
 }
 
 interface ProjectsProps {
-  projects: Project[];
+  favoriteRoles: string[];
 }
 
-export default function Projects({ projects }: ProjectsProps) {
+function FavoriteProjects({ favoriteRoles }: ProjectsProps) {
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
+    fetch("/api/projects")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        const projects: Project[] = data;
+        console.log(projects);
+        const filtered = projects.filter((project: Project) =>
+          favoriteRoles.includes(project.c)
+        );
+        setFilteredProjects(filtered);
+        console.log(filtered);
+      })
+      .catch((error) => {
+        console.error("Error fetching projects:", error);
+      });
+  }, [favoriteRoles]);
+
   return (
     <div>
       <h1>Projects from all time</h1>
       <p>
-        <small>(All Projects)</small>
+        <small>(Filtered Projects)</small>
       </p>
       <ul>
-        {projects.map((project) => (
+        {filteredProjects.map((project) => (
           <li key={project._id}>
             <h1>{project.a}</h1>
-            <h2>{project.c}</h2>
+            <h2>{project._id}</h2>
             <h3>{project.f}</h3>
             <p>{project.g}</p>
             <Link href={`/projects/${project._id}`} legacyBehavior>
@@ -47,20 +67,4 @@ export default function Projects({ projects }: ProjectsProps) {
   );
 }
 
-export async function getServerSideProps() {
-  try {
-    const client = await clientPromise;
-    const db = client.db("projectcollaborate");
-
-    const p = await db.collection("projects").find({}).toArray();
-
-    return {
-      props: { projects: JSON.parse(JSON.stringify(p)) },
-    };
-  } catch (e) {
-    console.error(e);
-    return {
-      props: { projects: [] },
-    };
-  }
-}
+export default FavoriteProjects;

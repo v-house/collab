@@ -1,30 +1,21 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { getSession } from "next-auth/react";
+import { useSession, signOut, getSession } from "next-auth/react";
+import { redirect } from "next/dist/server/api-utils";
 
 interface Project {
   _id: string;
-  a: string; // Project Title
-  b: string; // Project Details
-  c: string; // Type of Person to hire
-  d: Date; // Date of creation
-  e: Date; // Date of expiring
-  f: string; // Project Manager Id
-  g: string; // Project Manager Name
-  h: string[]; // Accepted List
-  i: string[]; // Pending List
-  j: string[]; // Rejected List
-  k: string; // External Link
-  l: string; // Expected traits
-  m: string; // Duties and Responsibilities
-  n: string; // Advantages of Collaboration
+  title: string;
+  details: string;
+  deadline: Date;
 }
 
 export default function ProjectDetails() {
   const router = useRouter();
   const { projectId } = router.query;
   const [project, setProject] = useState<Project | null>(null);
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     const fetchProjectDetails = async () => {
@@ -41,16 +32,24 @@ export default function ProjectDetails() {
     }
   }, [projectId]);
 
-  if (!project) {
+  const handleLogout = async () => {
+    await signOut();
+    router.push("/projects");
+  };
+
+  if (status === "loading" || !project) {
     return <div>Loading...</div>;
   }
 
   return (
     <div>
       <h1>Project Details</h1>
-      <h2>{project.a}</h2>
-      <h3>{project.b}</h3>
-      <p>{project.c}</p>
+      <h2>{project.title}</h2>
+      <h3>{project.details}</h3>
+      <p>{project.deadline}</p>
+      <p>Username: {session?.user?.name}</p>
+      <p>Email: {session?.user?.email}</p>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 }
@@ -62,9 +61,11 @@ export async function getServerSideProps(context: any) {
     return {
       redirect: {
         destination: "/auth/signin",
+        permanent: false,
       },
     };
   }
+
   return {
     props: { session },
   };

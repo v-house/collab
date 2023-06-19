@@ -1,28 +1,24 @@
 import clientPromise from "../../lib/mongodb";
 
 export default async function handler(req, res) {
-  if (req.method === "POST") {
-    try {
-      const { title, details, deadline } = req.body;
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method Not Allowed" });
+  }
 
-      // Connect to the MongoDB client
-      const client = await clientPromise;
-      const db = client.db("projectcollaborate");
+  const projectData = req.body;
+  console.log(projectData);
 
-      // Create a new project document in the collection
-      const result = await db.collection("projects").insertOne({
-        title,
-        details,
-        deadline,
-      });
+  try {
+    // Connect to the MongoDB client
+    const client = await clientPromise;
+    const db = client.db("projectcollaborate");
 
-      // Return the newly created project details
-      res.status(201).json(result.ops[0]);
-    } catch (error) {
-      console.error("Error creating project:", error);
-      res.status(500).json({ message: "Failed to create project" });
-    }
-  } else {
-    res.status(405).json({ message: "Method Not Allowed" });
+    // Insert the project document into the collection
+    const result = await db.collection("projects").insertOne(projectData);
+
+    res.status(201).json({ message: "Project created successfully", result });
+  } catch (error) {
+    console.error("Error creating project:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 }

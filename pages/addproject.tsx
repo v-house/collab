@@ -7,12 +7,13 @@ export default function AddProject() {
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
   const [typeOfPerson, setTypeOfPerson] = useState("");
-  const [customType, setCustomType] = useState(""); // New state for custom type
+  const [customType, setCustomType] = useState("");
   const [expiringDate, setExpiringDate] = useState("");
   const [externalLink, setExternalLink] = useState("");
   const [expectedTraits, setExpectedTraits] = useState("");
   const [dutiesResponsibilities, setDutiesResponsibilities] = useState("");
   const [advantagesCollaboration, setAdvantagesCollaboration] = useState("");
+  const [availableSeats, setAvailableSeats] = useState(0);
 
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -21,78 +22,100 @@ export default function AddProject() {
     e.preventDefault();
 
     if (status !== "authenticated") {
-      router.push("/login"); // Redirect to the login page if not authenticated
+      router.push("/login");
       return;
     }
 
-    const projectData = {
-      a: title,
-      b: details,
-      c: typeOfPerson === "Other" ? customType : typeOfPerson, // Use customType if typeOfPerson is "Other"
-      d: new Date(), // Today's date
-      e: new Date(expiringDate),
-      f: session?.user?.email,
-      g: session?.user?.name,
-      h: [], // Empty accepted list
-      i: [], // Empty pending list
-      j: [], // Empty rejected list
-      k: externalLink,
-      l: expectedTraits,
-      m: dutiesResponsibilities,
-      n: advantagesCollaboration,
-    };
+    const today = new Date();
+    const selectedDate = new Date(expiringDate);
 
-    try {
-      const response = await axios.post("/api/addproject", projectData);
-      console.log("Project created successfully:", response.data);
+    if (selectedDate > today && selectedDate <= addDays(today, 30)) {
+      const projectData = {
+        a: title,
+        b: details,
+        c: typeOfPerson === "Other" ? customType : typeOfPerson,
+        d: today,
+        e: selectedDate,
+        f: session?.user?.email,
+        g: session?.user?.name,
+        h: [],
+        i: [],
+        j: [],
+        k: externalLink,
+        l: expectedTraits,
+        m: dutiesResponsibilities,
+        n: advantagesCollaboration,
+        o: availableSeats,
+      };
 
-      // Reset form inputs
-      setTitle("");
-      setDetails("");
-      setTypeOfPerson("");
-      setCustomType(""); // Reset customType state
-      setExpiringDate("");
-      setExternalLink("");
-      setExpectedTraits("");
-      setDutiesResponsibilities("");
-      setAdvantagesCollaboration("");
+      try {
+        const response = await axios.post("/api/addproject", projectData);
+        console.log("Project created successfully:", response.data);
 
-      // Redirect to the projects page
-      router.push("/projects");
-    } catch (error) {
-      console.error("Error creating project:", error);
+        setTitle("");
+        setDetails("");
+        setTypeOfPerson("");
+        setCustomType("");
+        setExpiringDate("");
+        setExternalLink("");
+        setExpectedTraits("");
+        setDutiesResponsibilities("");
+        setAdvantagesCollaboration("");
+
+        router.push("/projects");
+      } catch (error) {
+        console.error("Error creating project:", error);
+      }
+    } else {
+      console.error("Invalid expiry date");
     }
   };
 
+  const addDays = (date: string | number | Date, days: number) => {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  };
+
   return (
-    <div>
-      <h1>Create Project</h1>
+    <div className="max-w-md mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-4">Create Project</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="title">Title:</label>
+        <div className="mb-4">
+          <label htmlFor="title" className="font-bold">
+            Title:
+          </label>
           <input
             type="text"
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            className="border border-gray-300 p-2 rounded w-full"
             required
           />
         </div>
         <div>
-          <label htmlFor="details">Details:</label>
+          <label htmlFor="details" className="block font-bold mb-1">
+            Details:
+          </label>
           <textarea
             id="details"
             value={details}
             onChange={(e) => setDetails(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded"
             required
           />
         </div>
-        <div>
-          <label htmlFor="typeOfPerson">Type of Person to hire:</label>
+
+        <div className="mt-4">
+          <label htmlFor="typeOfPerson" className="block font-bold mb-1">
+            Type of Person to hire:
+          </label>
           <select
             id="typeOfPerson"
             value={typeOfPerson}
             onChange={(e) => setTypeOfPerson(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded"
             required
           >
             <option value="">Select Type</option>
@@ -102,69 +125,114 @@ export default function AddProject() {
             <option value="Other">Other</option>
           </select>
         </div>
+
         {typeOfPerson === "Other" && (
-          <div>
-            <label htmlFor="customType">Custom Type:</label>
+          <div className="mt-4">
+            <label htmlFor="customType" className="block font-bold mb-1">
+              Custom Type:
+            </label>
             <input
               type="text"
               id="customType"
               value={customType}
-              onChange={(e) => setCustomType(e.target.value)} // Use setCustomType for customType state
+              onChange={(e) => setCustomType(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded"
               required
             />
           </div>
         )}
-        <div>
-          <label htmlFor="expiringDate">Expiring Date:</label>
+
+        <div className="mt-4">
+          <label htmlFor="availableSeats" className="block font-bold mb-1">
+            Available Seats:
+          </label>
+          <input
+            type="number"
+            id="availableSeats"
+            value={availableSeats}
+            onChange={(e) => setAvailableSeats(parseInt(e.target.value))}
+            className="w-full p-2 border border-gray-300 rounded"
+            required
+          />
+        </div>
+
+        <div className="mt-4">
+          <label htmlFor="expiringDate" className="block font-bold mb-1">
+            Expiring Date:
+          </label>
           <input
             type="date"
             id="expiringDate"
             value={expiringDate}
             onChange={(e) => setExpiringDate(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded"
+            max={addDays(new Date(), 30).toISOString().split("T")[0]}
             required
           />
         </div>
         <div>
-          <label htmlFor="externalLink">External Link:</label>
+          <label htmlFor="externalLink" className="block font-bold mb-1">
+            External Link:
+          </label>
           <textarea
             id="externalLink"
             value={externalLink}
             onChange={(e) => setExternalLink(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded"
             required
           />
         </div>
-        <div>
-          <label htmlFor="expectedTraits">Expected Traits:</label>
+
+        <div className="mt-4">
+          <label htmlFor="expectedTraits" className="block font-bold mb-1">
+            Expected Traits:
+          </label>
           <textarea
             id="expectedTraits"
             value={expectedTraits}
             onChange={(e) => setExpectedTraits(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded"
             required
           />
         </div>
-        <div>
-          <label htmlFor="dutiesResponsibilities">
+
+        <div className="mt-4">
+          <label
+            htmlFor="dutiesResponsibilities"
+            className="block font-bold mb-1"
+          >
             Duties and Responsibilities:
           </label>
           <textarea
             id="dutiesResponsibilities"
             value={dutiesResponsibilities}
             onChange={(e) => setDutiesResponsibilities(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded"
             required
           />
         </div>
-        <div>
-          <label htmlFor="advantagesCollaboration">
+
+        <div className="mt-4">
+          <label
+            htmlFor="advantagesCollaboration"
+            className="block font-bold mb-1"
+          >
             Advantages of Collaboration:
           </label>
           <textarea
             id="advantagesCollaboration"
             value={advantagesCollaboration}
             onChange={(e) => setAdvantagesCollaboration(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded"
             required
           />
         </div>
-        <button type="submit">Create</button>
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+        >
+          Create
+        </button>
       </form>
     </div>
   );

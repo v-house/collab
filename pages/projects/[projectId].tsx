@@ -19,6 +19,7 @@ interface Project {
   l: string; // Expected traits
   m: string; // Duties and Responsibilities
   n: string; // Advantages of Collaboration
+  o: number; // Available seats
 }
 
 export default function ProjectDetails() {

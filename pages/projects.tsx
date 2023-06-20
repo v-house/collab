@@ -18,6 +18,7 @@ interface Project {
   l: string; // Expected traits
   m: string; // Duties and Responsibilities
   n: string; // Advantages of Collaboration
+  o: number; // Available Seats
 }
 
 interface ProjectsProps {
@@ -129,6 +130,9 @@ export default function Projects({ projects }: ProjectsProps) {
                     <p className="text-gray-500">
                       Expires on: {new Date(project.e).toLocaleDateString()}
                     </p>
+                    <p className="text-gray-500">
+                      Available seats: {project.o}
+                    </p>
                     <button
                       className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md"
                       onClick={() => router.push(`/projects/${project._id}`)}
@@ -161,6 +165,9 @@ export default function Projects({ projects }: ProjectsProps) {
                       </p>
                       <p className="text-gray-500">
                         Expires on: {new Date(project.e).toLocaleDateString()}
+                      </p>
+                      <p className="text-gray-500">
+                        Available seats: {project.o}
                       </p>
                       <button
                         className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md"
@@ -202,6 +209,9 @@ export default function Projects({ projects }: ProjectsProps) {
                           <p className="text-gray-500">
                             Expires on:{" "}
                             {new Date(project.e).toLocaleDateString()}
+                          </p>
+                          <p className="text-gray-500">
+                            Available seats: {project.o}
                           </p>
                           <button
                             className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md"

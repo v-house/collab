@@ -29,6 +29,7 @@ export default function Projects({ projects }: ProjectsProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredRoles, setFilteredRoles] = useState<string[]>([]);
   const [roleCounts, setRoleCounts] = useState<Record<string, number>>({});
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
 
   useEffect(() => {
     const counts: Record<string, number> = {};
@@ -74,6 +75,11 @@ export default function Projects({ projects }: ProjectsProps) {
       });
 
     setFilteredRoles(filteredRoles);
+
+    const filteredProjects = projects.filter((project) =>
+      project.a.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredProjects(filteredProjects);
   };
 
   const hasSearchResults = filteredRoles.length > 0;
@@ -84,21 +90,61 @@ export default function Projects({ projects }: ProjectsProps) {
         <div className="flex items-center mb-4">
           <input
             type="text"
-            placeholder="Search roles..."
+            placeholder="Search among projects and roles..."
             value={searchQuery}
             onChange={handleSearch}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none"
           />
         </div>
-        {hasSearchResults ? (
+        {searchQuery !== "" && (
+          <div className="mb-4">
+            <h2 className="text-lg font-bold">
+              Search Results from the Project Title:
+            </h2>
+            <div className="flex overflow-x-auto space-x-4">
+              {filteredProjects.length > 0 ? (
+                filteredProjects.map((project) => (
+                  <div
+                    key={project._id}
+                    className="bg-white rounded-md shadow flex-shrink-0 p-4 max-w-lg mb-4"
+                  >
+                    <div className="flex flex-col">
+                      <h3 className="font-bold truncate">{project.a}</h3>
+                      <p className="text-gray-500">Role: {project.c}</p>
+                      <p className="text-gray-500">
+                        Expires on: {new Date(project.e).toLocaleDateString()}
+                      </p>
+                      <button
+                        className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md"
+                        onClick={() => router.push(`/projects/${project._id}`)}
+                      >
+                        View Details
+                      </button>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="flex items-center justify-center h-64">
+                  <p className="text-gray-500 text-lg">
+                    No such Projects available
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+        {hasSearchResults && (
           <>
-            {filteredRoles.map((role) => (
-              <div key={role} className="my-4">
-                <h2 className="text-lg font-bold">Available for "{role}"</h2>
-                <div className="flex overflow-x-auto space-x-4">
-                  {projects
-                    .filter((project) => project.c === role)
-                    .map((project) => (
+            {filteredRoles.map((role) => {
+              const roleProjects = projects.filter(
+                (project) => project.c === role
+              );
+              if (roleProjects.length === 0) return null; // Skip rendering if no projects for the role
+              return (
+                <div key={role} className="my-4">
+                  <h2 className="text-lg font-bold">Available for "{role}"</h2>
+                  <div className="flex overflow-x-auto space-x-4">
+                    {roleProjects.map((project) => (
                       <div
                         key={project._id}
                         className="bg-white rounded-md shadow flex-shrink-0 p-4 max-w-lg mb-4"
@@ -120,14 +166,11 @@ export default function Projects({ projects }: ProjectsProps) {
                         </div>
                       </div>
                     ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </>
-        ) : (
-          <div className="flex items-center justify-center h-64">
-            <p className="text-gray-500 text-lg">No Projects Available</p>
-          </div>
         )}
       </div>
     </>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 
 export default function AddProject() {
   const [title, setTitle] = useState("");
@@ -168,4 +168,19 @@ export default function AddProject() {
       </form>
     </div>
   );
+}
+
+export async function getServerSideProps(context: any) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/auth/signin",
+      },
+    };
+  }
+  return {
+    props: { session },
+  };
 }

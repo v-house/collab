@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import clientPromise from "../lib/mongodb";
 import { useEffect, useState } from "react";
+import ReqFavorites from "../components/requestfavorites";
 
 interface Project {
   _id: string;
@@ -240,6 +241,7 @@ export default function Projects({ projects }: ProjectsProps) {
           </>
         )}
       </div>
+      <ReqFavorites />
     </>
   );
 }

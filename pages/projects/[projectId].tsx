@@ -112,54 +112,66 @@ export default function ProjectDetails() {
   }
 
   return (
-    <div>
-      <h1>Project Details</h1>
-      <h2>{project?.a}</h2>
-      <h3>{project?.b}</h3>
-      <p>{project?.c}</p>
+    <>
+      <div>
+        <h1>Project Details</h1>
+        <h2>{project?.a}</h2>
+        <h3>{project?.b}</h3>
+        <p>{project?.c}</p>
 
-      {project?.f !== userEmail &&
-        !project?.h.includes(userEmail) &&
-        !project?.j.includes(userEmail) && (
-          <button onClick={handleAskForCollaboration}>
-            Ask for Collaboration
-          </button>
+        {project?.f !== userEmail &&
+          !project?.h.includes(userEmail) &&
+          !project?.j.includes(userEmail) && (
+            <button onClick={handleAskForCollaboration}>
+              Ask for Collaboration
+            </button>
+          )}
+
+        {project?.i.includes(userEmail) && (
+          <div>
+            <p>Your entry is pending for acceptance.</p>
+          </div>
         )}
 
-      {project?.i.includes(userEmail) && (
-        <div>
-          <p>Your entry is pending for acceptance.</p>
-        </div>
-      )}
+        {project?.j.includes(userEmail) && <p>You have been rejected.</p>}
 
-      {project?.j.includes(userEmail) && <p>You have been rejected.</p>}
+        {project?.h.includes(userEmail) && (
+          <div>
+            <p>You are accepted. Contact the project manager: {project?.g}</p>
+          </div>
+        )}
 
-      {project?.h.includes(userEmail) && (
-        <div>
-          <p>You are accepted. Contact the project manager: {project?.g}</p>
-        </div>
-      )}
-
-      {project?.f === userEmail && (
-        <div>
-          <button onClick={handleDeleteProject}>Delete Project</button>
-          <button onClick={() => console.log("Display accepted list")}>
-            Display Accepted List
-          </button>
-          <button onClick={() => console.log("Display rejected list")}>
-            Display Rejected List
-          </button>
-          <h1>Pending users list:</h1>
-          {project.i.map((user) => (
-            <div key={user}>
-              <p>{user}</p>
-              <button onClick={() => handleAcceptUser(user)}>Accept</button>
-              <button onClick={() => handleRejectUser(user)}>Reject</button>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+        {project?.f === userEmail && (
+          <div>
+            <button onClick={handleDeleteProject}>Delete Project</button>
+            <h1>Accepted users list:</h1>
+            {project.h.map((user) => (
+              <div key={user}>
+                <p>{user}</p>
+                <button onClick={() => handleAcceptUser(user)}>Accept</button>
+                <button onClick={() => handleRejectUser(user)}>Reject</button>
+              </div>
+            ))}
+            <h1>Rejected users list:</h1>
+            {project.h.map((user) => (
+              <div key={user}>
+                <p>{user}</p>
+                <button onClick={() => handleAcceptUser(user)}>Accept</button>
+                <button onClick={() => handleRejectUser(user)}>Reject</button>
+              </div>
+            ))}
+            <h1>Pending users list:</h1>
+            {project.i.map((user) => (
+              <div key={user}>
+                <p>{user}</p>
+                <button onClick={() => handleAcceptUser(user)}>Accept</button>
+                <button onClick={() => handleRejectUser(user)}>Reject</button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 

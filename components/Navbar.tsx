@@ -12,7 +12,7 @@ const Navbar = () => {
       <a
         href="/"
         onClick={handleClick}
-        className="text-white text-xl font-bold hover:text-gray-300 cursor-pointer"
+        className="text-white text-xl font-bold hover:text-gray-300 cursor-pointer absolute left-1/2 transform -translate-x-1/2"
       >
         Collab@IITH
       </a>

@@ -98,6 +98,10 @@ export default function Projects({ projects }: ProjectsProps) {
     setFilteredProjects(filteredProjects);
   };
 
+  const handleFavoritesClick = () => {
+    router.push("/profile");
+  };
+
   const hasSearchResults = filteredRoles.length > 0;
 
   return (
@@ -114,7 +118,12 @@ export default function Projects({ projects }: ProjectsProps) {
         </div>
         {filteredProjects.length > 0 && (
           <div className="my-4">
-            <h2 className="text-lg font-bold">From your Favorites</h2>
+            <h2 className="text-lg font-bold">
+              From{" "}
+              <button className="text-blue-500" onClick={handleFavoritesClick}>
+                "Your Favorites"
+              </button>
+            </h2>
             <div className="flex overflow-x-auto space-x-4">
               {filteredProjects.map((project) => (
                 <div

@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import clientPromise from "../../../lib/mongodb";
+import clientPromise from "../../../../lib/mongodb";
 
 export default async function handler(req, res) {
   const { projectId } = req.query;
@@ -10,16 +10,16 @@ export default async function handler(req, res) {
 
     const project = await db
       .collection("projects")
-      .findOne({ _id: ObjectId(projectId) });
+      .deleteOne({ _id: ObjectId(projectId) });
 
-    if (!project) {
+    if (project.deletedCount === 0) {
       res.status(404).json({ message: "Project not found" });
       return;
     }
 
-    res.status(200).json(project);
+    res.status(200).json({ message: "Project deleted" });
   } catch (error) {
-    console.error("Error fetching project details:", error);
+    console.error("Error deleting project:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 }

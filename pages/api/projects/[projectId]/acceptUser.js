@@ -1,22 +1,14 @@
-// api/projects/[projectId]/acceptUser.js
-
-import { getSession } from "next-auth/react";
 import { ObjectId } from "mongodb";
-import { connectToDatabase } from "../../../utils/mongodb";
+import clientPromise from "../../../../lib/mongodb";
 
 export default async function handler(req, res) {
-  const session = await getSession({ req });
-
-  if (!session) {
-    res.status(401).json({ message: "Unauthorized" });
-    return;
-  }
-
-  const userId = session.user.id;
-  const projectId = req.query.projectId;
+  const { projectId } = req.query;
+  const { userEmail } = req.body; // Assuming the user email ID is provided in the request body
 
   try {
-    const { db } = await connectToDatabase();
+    const client = await clientPromise;
+    const db = client.db("projectcollaborate");
+
     const project = await db
       .collection("projects")
       .findOne({ _id: ObjectId(projectId) });
@@ -26,26 +18,22 @@ export default async function handler(req, res) {
       return;
     }
 
-    if (project.f !== userId) {
-      res.status(400).json({ message: "Invalid request" });
+    // Check if the user is in the pending list
+    if (!project.i.includes(userEmail)) {
+      res.status(400).json({ message: "User is not in the pending list" });
       return;
     }
 
-    const { userId: acceptUserId } = req.body;
+    // Remove the user from the pending list and add to the accepted list
+    await db.collection("projects").updateOne(
+      { _id: ObjectId(projectId) },
+      {
+        $pull: { i: userEmail },
+        $addToSet: { h: userEmail },
+      }
+    );
 
-    if (!acceptUserId) {
-      res.status(400).json({ message: "Invalid request" });
-      return;
-    }
-
-    await db
-      .collection("projects")
-      .updateOne(
-        { _id: ObjectId(projectId) },
-        { $pull: { i: acceptUserId }, $addToSet: { h: acceptUserId } }
-      );
-
-    res.status(200).json({ message: "User accepted successfully" });
+    res.status(200).json({ message: "User accepted" });
   } catch (error) {
     console.error("Error accepting user:", error);
     res.status(500).json({ message: "Internal server error" });

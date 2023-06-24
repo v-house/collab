@@ -99,7 +99,7 @@ export default function Projects({ projects }: ProjectsProps) {
   };
 
   const handleFavoritesClick = () => {
-    router.push("/profile");
+    router.push("/favorites");
   };
 
   const hasSearchResults = filteredRoles.length > 0;

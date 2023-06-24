@@ -1,11 +1,7 @@
 import GuestProfile from "./guest-profile";
 
 const profile = () => {
-  return (
-    <div>
-      <GuestProfile />
-    </div>
-  );
+  return <div>Profile page</div>;
 };
 
 export default profile;

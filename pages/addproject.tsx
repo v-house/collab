@@ -22,7 +22,7 @@ export default function AddProject() {
     e.preventDefault();
 
     if (status !== "authenticated") {
-      router.push("/login");
+      router.push("/auth/signin");
       return;
     }
 

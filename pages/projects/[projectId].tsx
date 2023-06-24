@@ -149,9 +149,7 @@ export default function ProjectDetails() {
           <button onClick={() => console.log("Display rejected list")}>
             Display Rejected List
           </button>
-          <button onClick={() => console.log("Display pending list")}>
-            Display Pending List
-          </button>
+          <h1>Pending users list:</h1>
           {project.i.map((user) => (
             <div key={user}>
               <p>{user}</p>

@@ -29,11 +29,22 @@ const Footer = () => {
             </div>
           </div>
         </div>
+
         <div className="mt-4 text-center">
           <p className="text-sm lg:text-base text-white">
             &copy; {new Date().getFullYear()} Collab@IITH. All rights reserved.
           </p>
         </div>
+      </div>
+      <div className="text-center mt-4">
+        <a
+          href="https://vercel.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-gray-500 hover:text-gray-300 flex items-center justify-center"
+        >
+          Special thanks to Vercel
+        </a>
       </div>
     </footer>
   );

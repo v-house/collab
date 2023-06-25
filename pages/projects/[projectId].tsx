@@ -109,7 +109,15 @@ export default function ProjectDetails() {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <>
+        <div className="container mx-auto p-4">
+          <div className="container mx-auto p-4">
+            <div>Loading...</div>
+          </div>
+        </div>
+      </>
+    );
   }
 
   return (

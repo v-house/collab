@@ -120,6 +120,14 @@ export default function ProjectDetails() {
     );
   }
 
+  const handleCopyEmail = (email: string) => {
+    if (email) {
+      navigator.clipboard.writeText(email);
+      // Add any additional logic or feedback you want to provide after copying the email
+      console.log(`Email ${email} copied to clipboard.`);
+    }
+  };
+
   return (
     <>
       <div>
@@ -281,20 +289,28 @@ export default function ProjectDetails() {
                 ))}
                 <h2 className="text-lg font-bold mt-4">Pending users list:</h2>
                 {project.i.map((user) => (
-                  <div key={user}>
+                  <div key={user} className="flex flex-col items-start">
                     <p>{user}</p>
-                    <button
-                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                      onClick={() => handleAcceptUser(user)}
-                    >
-                      Accept
-                    </button>
-                    <button
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                      onClick={() => handleRejectUser(user)}
-                    >
-                      Reject
-                    </button>
+                    <div className="mt-2">
+                      <button
+                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded mr-1 mb-1"
+                        onClick={() => handleAcceptUser(user)}
+                      >
+                        Accept
+                      </button>
+                      <button
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded mr-1 mb-1"
+                        onClick={() => handleRejectUser(user)}
+                      >
+                        Reject
+                      </button>
+                      <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-1 mb-1"
+                        onClick={() => handleCopyEmail(user)}
+                      >
+                        Copy Email
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>

@@ -28,6 +28,7 @@ export default function ProjectDetails() {
   const [project, setProject] = useState<Project | null>(null);
   const [userEmail, setUserEmail] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [copyButtonText, setCopyButtonText] = useState("Copy Link");
 
   useEffect(() => {
     const fetchProjectDetails = async () => {
@@ -114,62 +115,184 @@ export default function ProjectDetails() {
   return (
     <>
       <div>
-        <h1>Project Details</h1>
-        <h2>{project?.a}</h2>
-        <h3>{project?.b}</h3>
-        <p>{project?.c}</p>
-
-        {project?.f !== userEmail &&
-          !project?.h.includes(userEmail) &&
-          !project?.j.includes(userEmail) && (
-            <button onClick={handleAskForCollaboration}>
-              Ask for Collaboration
-            </button>
-          )}
-
-        {project?.i.includes(userEmail) && (
-          <div>
-            <p>Your entry is pending for acceptance.</p>
-          </div>
-        )}
-
-        {project?.j.includes(userEmail) && <p>You have been rejected.</p>}
-
-        {project?.h.includes(userEmail) && (
-          <div>
-            <p>You are accepted. Contact the project manager: {project?.g}</p>
-          </div>
-        )}
-
-        {project?.f === userEmail && (
-          <div>
-            <button onClick={handleDeleteProject}>Delete Project</button>
-            <h1>Accepted users list:</h1>
-            {project.h.map((user) => (
-              <div key={user}>
-                <p>{user}</p>
-                <button onClick={() => handleAcceptUser(user)}>Accept</button>
-                <button onClick={() => handleRejectUser(user)}>Reject</button>
+        <div className="container mx-auto p-4">
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h1 className="text-2xl font-bold mb-4">Project Details</h1>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div>
+                <h2 className="text-lg font-bold">Project Title:</h2>
+                <p>{project?.a}</p>
               </div>
-            ))}
-            <h1>Rejected users list:</h1>
-            {project.h.map((user) => (
-              <div key={user}>
-                <p>{user}</p>
-                <button onClick={() => handleAcceptUser(user)}>Accept</button>
-                <button onClick={() => handleRejectUser(user)}>Reject</button>
+              <div>
+                <h2 className="text-lg font-bold">Project Details:</h2>
+                <p>{project?.b}</p>
               </div>
-            ))}
-            <h1>Pending users list:</h1>
-            {project.i.map((user) => (
-              <div key={user}>
-                <p>{user}</p>
-                <button onClick={() => handleAcceptUser(user)}>Accept</button>
-                <button onClick={() => handleRejectUser(user)}>Reject</button>
+              <div>
+                <h2 className="text-lg font-bold">Available Role:</h2>
+                <p>{project?.c}</p>
               </div>
-            ))}
+              <div>
+                <h2 className="text-lg font-bold">Date-Time of Creation:</h2>
+                <p>{project?.d ? new Date(project?.d).toLocaleString() : ""}</p>
+              </div>
+              <div>
+                <h2 className="text-lg font-bold">Date-Time of Expiration:</h2>
+                <p>{project?.e ? new Date(project?.e).toLocaleString() : ""}</p>
+              </div>
+              <div>
+                <h2 className="text-lg font-bold">Project Manager Name:</h2>
+                <p>{project?.g}</p>
+              </div>
+              <div>
+                <h2 className="text-lg font-bold">Project Manager Email:</h2>
+                <p>
+                  <a
+                    href={`mailto:${project?.g}`}
+                    className="text-blue-500 hover:text-blue-300"
+                  >
+                    {project?.f}
+                  </a>
+                </p>
+              </div>
+              <div>
+                <h2 className="text-lg font-bold">External Link:</h2>
+                <a
+                  href={project?.k}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:text-blue-700"
+                >
+                  {project?.k}
+                </a>
+                <button
+                  onClick={() => {
+                    if (project?.k) {
+                      navigator.clipboard.writeText(project.k);
+                      setCopyButtonText("Copied!");
+
+                      setTimeout(() => {
+                        setCopyButtonText("Copy Link");
+                      }, 3000);
+                    }
+                  }}
+                  className="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded"
+                >
+                  {copyButtonText}
+                </button>
+              </div>
+
+              <div>
+                <h2 className="text-lg font-bold">Traits Mentioned:</h2>
+                <p>{project?.l}</p>
+              </div>
+              <div>
+                <h2 className="text-lg font-bold">Duties:</h2>
+                <p>{project?.m}</p>
+              </div>
+              <div>
+                <h2 className="text-lg font-bold">Advantages:</h2>
+                <p>{project?.n}</p>
+              </div>
+              <div>
+                <h2 className="text-lg font-bold">Seats Available:</h2>
+                <p>{project?.o}</p>
+              </div>
+              <div>
+                <h2 className="text-lg font-bold">People Interacted:</h2>
+                <p>
+                  {(project?.h?.length ?? 0) +
+                    (project?.i?.length ?? 0) +
+                    (project?.j?.length ?? 0)}
+                </p>
+              </div>
+            </div>
           </div>
-        )}
+        </div>
+
+        <div className="container mx-auto p-4">
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h1 className="text-2xl font-bold">Project Updates</h1>
+
+            {project?.f !== userEmail &&
+              !project?.h.includes(userEmail) &&
+              !project?.j.includes(userEmail) &&
+              (project?.e && new Date() <= new Date(project?.e) ? (
+                <div className="mt-4">
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={handleAskForCollaboration}
+                  >
+                    Ask for Collaboration
+                  </button>
+                </div>
+              ) : (
+                <p className="mt-4 text-red-500">
+                  Entry taking time has expired
+                </p>
+              ))}
+
+            {project?.i.includes(userEmail) && (
+              <div className="mt-4">
+                <p className="text-yellow-500">
+                  Your entry is pending for acceptance.
+                </p>
+              </div>
+            )}
+
+            {project?.j.includes(userEmail) && (
+              <p className="mt-4 text-red-500">You have been rejected.</p>
+            )}
+
+            {project?.h.includes(userEmail) && (
+              <div className="mt-4">
+                <p className="text-green-500">
+                  You are accepted. Contact the project manager: {project?.g}
+                </p>
+              </div>
+            )}
+
+            {project?.f === userEmail && (
+              <div className="mt-4">
+                <button
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={handleDeleteProject}
+                >
+                  Delete Project
+                </button>
+                <h2 className="text-lg font-bold mt-4">Accepted users list:</h2>
+                {project.h.map((user) => (
+                  <div key={user}>
+                    <p>{user}</p>
+                  </div>
+                ))}
+                <h2 className="text-lg font-bold mt-4">Rejected users list:</h2>
+                {project.j.map((user) => (
+                  <div key={user}>
+                    <p>{user}</p>
+                  </div>
+                ))}
+                <h2 className="text-lg font-bold mt-4">Pending users list:</h2>
+                {project.i.map((user) => (
+                  <div key={user}>
+                    <p>{user}</p>
+                    <button
+                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                      onClick={() => handleAcceptUser(user)}
+                    >
+                      Accept
+                    </button>
+                    <button
+                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                      onClick={() => handleRejectUser(user)}
+                    >
+                      Reject
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </>
   );

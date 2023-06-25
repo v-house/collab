@@ -7,6 +7,9 @@ import { useEffect, useState } from "react";
 const Profile = (props: { session: any }) => {
   const router = useRouter();
   const [projects, setProjects] = useState([]);
+  const [showDialog, setShowDialog] = useState(false);
+  const [loaderProgress, setLoaderProgress] = useState(100);
+  const dialogTimeout = 5000; // Dialog box timeout in milliseconds
 
   // Redirect to sign-in page if user is not authenticated
   if (!props.session) {
@@ -40,6 +43,35 @@ const Profile = (props: { session: any }) => {
   };
 
   const userProjects = projects.filter((project: any) => project.f === email);
+
+  // Show the dialog for the specified timeout
+  useEffect(() => {
+    if (showDialog) {
+      const timer = setTimeout(() => {
+        setShowDialog(false);
+      }, dialogTimeout);
+
+      // Update the loader progress every 100ms
+      const increment = (dialogTimeout / 100) * 100;
+      const progressInterval = setInterval(() => {
+        setLoaderProgress((prevProgress) =>
+          Math.max(prevProgress - increment, 0)
+        );
+      }, 100);
+
+      // Clear the timer and progress interval when dialog is closed
+      return () => {
+        clearTimeout(timer);
+        clearInterval(progressInterval);
+      };
+    }
+  }, [showDialog]);
+
+  // Open the dialog
+  const openDialog = () => {
+    setShowDialog(true);
+    setLoaderProgress(100);
+  };
 
   return (
     <>
@@ -92,12 +124,48 @@ const Profile = (props: { session: any }) => {
           </div>
         )}
 
-        <button
-          className="mt-4 bg-red-500 text-white px-4 py-2 rounded-md"
-          onClick={handleSignOut}
-        >
-          Sign Out
-        </button>
+        {showDialog && (
+          <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div className="bg-white p-8 rounded-lg shadow-md w-80">
+              <div className="h-2 w-full bg-gray-200 rounded-full mb-4">
+                <div
+                  className="h-full bg-gradient-to-r from-green-400 to-blue-500"
+                  style={{
+                    width: `${loaderProgress}%`,
+                    borderRadius: "inherit",
+                    transition: `width ${dialogTimeout}ms linear`,
+                  }}
+                ></div>
+              </div>
+              <h2 className="text-xl font-bold mb-4">A Message for You</h2>
+              <p className="text-lg">
+                And so are we happy for you! Come on! Let's go ahead and join
+                our hands to come together and collaborate.
+              </p>
+              <p className="text-sm mt-4 text-red-500">
+                <em>
+                  ***Note: The message for you keeps updating, so please come
+                  back here when you get back at collab@IITH
+                </em>
+              </p>
+            </div>
+          </div>
+        )}
+
+        <div className="flex justify-between mt-4">
+          <button
+            className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white px-4 py-2 rounded-md shadow-md transition-colors duration-300"
+            onClick={openDialog}
+          >
+            I'm happy today
+          </button>
+          <button
+            className="bg-gradient-to-r from-red-400 to-pink-500 hover:from-yellow-500 hover:to-red-500 text-white px-4 py-2 rounded-md shadow-md transition-colors duration-300"
+            onClick={handleSignOut}
+          >
+            Sign Out
+          </button>
+        </div>
       </div>
     </>
   );

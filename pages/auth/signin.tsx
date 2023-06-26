@@ -4,8 +4,10 @@ import { useRouter } from "next/router";
 export default function SignIn() {
   const router = useRouter();
 
+  const call = router.query.redirect || "/";
+
   const handleSignIn = () => {
-    signIn("google", { callbackUrl: "/profile" });
+    signIn("google", { callbackUrl: String(call) });
   };
 
   return (

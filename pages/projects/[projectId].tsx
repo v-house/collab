@@ -177,12 +177,37 @@ export default function ProjectDetails() {
               </div>
               <div>
                 <h2 className="text-lg font-bold">Date-Time of Creation:</h2>
-                <p>{project?.d ? new Date(project?.d).toLocaleString() : ""}</p>
+                <p>
+                  {project?.d
+                    ? new Date(project?.d).toLocaleString("en-US", {
+                        hour: "numeric",
+                        minute: "numeric",
+                        second: "numeric",
+                        hour12: true,
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })
+                    : ""}
+                </p>
               </div>
               <div>
                 <h2 className="text-lg font-bold">Date-Time of Expiration:</h2>
-                <p>{project?.e ? new Date(project?.e).toLocaleString() : ""}</p>
+                <p>
+                  {project?.e
+                    ? new Date(project?.e).toLocaleString("en-US", {
+                        hour: "numeric",
+                        minute: "numeric",
+                        second: "numeric",
+                        hour12: true,
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })
+                    : ""}
+                </p>
               </div>
+
               <div>
                 <h2 className="text-lg font-bold">Project Manager Name:</h2>
                 <p>{project?.g}</p>
@@ -376,11 +401,12 @@ export default function ProjectDetails() {
 
 export async function getServerSideProps(context: any) {
   const session = await getSession(context);
+  const { projectId } = context.query;
 
   if (!session) {
     return {
       redirect: {
-        destination: "/auth/signin",
+        destination: `/auth/signin?redirect=/projects/${projectId}`,
       },
     };
   }

@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import clientPromise from "../lib/mongodb";
 import { useEffect, useState } from "react";
 import ReqFavorites from "../components/requestfavorites";
 

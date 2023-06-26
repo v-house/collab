@@ -33,7 +33,9 @@ export default function ProjectDetails() {
   useEffect(() => {
     const fetchProjectDetails = async () => {
       try {
-        const response = await axios.get(`/api/projects/${projectId}`);
+        const response = await axios.get(
+          `/api/protected-hashed-nextjs/${projectId}`
+        );
         setProject(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -55,43 +57,65 @@ export default function ProjectDetails() {
   }, [projectId]);
 
   const handleAskForCollaboration = async () => {
-    try {
-      await axios.post(`/api/projects/${projectId}/askForCollaboration`, {
-        userEmail,
-      });
-      alert("Request for collaboration sent");
-      // Refresh the project details
-      const response = await axios.get(`/api/projects/${projectId}`);
-      setProject(response.data);
-    } catch (error) {
-      console.error("Error asking for collaboration:", error);
-      alert("Error asking for collaboration");
+    if (
+      confirm(
+        `Please confirm your request. Make sure you have met all the needs and requirements. Hence, confirm this because this action is irreversible?`
+      )
+    ) {
+      try {
+        await axios.post(`/api/projects/${projectId}/askForCollaboration`, {
+          userEmail,
+        });
+        alert("Request for collaboration sent");
+        // Refresh the project details
+        const response = await axios.get(`/api/projects/${projectId}`);
+        setProject(response.data);
+      } catch (error) {
+        console.error("Error asking for collaboration:", error);
+        alert("Error asking for collaboration");
+      }
     }
   };
 
   const handleAcceptUser = async (userEmail: string) => {
-    try {
-      await axios.post(`/api/projects/${projectId}/acceptUser`, { userEmail });
-      alert("User accepted");
-      // Refresh the project details
-      const response = await axios.get(`/api/projects/${projectId}`);
-      setProject(response.data);
-    } catch (error) {
-      console.error("Error accepting user:", error);
-      alert("Error accepting user");
+    if (
+      confirm(
+        `You are accepting the user with the following email-id: ${userEmail}. Are you sure because this action is irreversible?`
+      )
+    ) {
+      try {
+        await axios.post(`/api/projects/${projectId}/acceptUser`, {
+          userEmail,
+        });
+        alert("User accepted");
+        // Refresh the project details
+        const response = await axios.get(`/api/projects/${projectId}`);
+        setProject(response.data);
+      } catch (error) {
+        console.error("Error accepting user:", error);
+        alert("Error accepting user");
+      }
     }
   };
 
   const handleRejectUser = async (userEmail: string) => {
-    try {
-      await axios.post(`/api/projects/${projectId}/rejectUser`, { userEmail });
-      alert("User rejected");
-      // Refresh the project details
-      const response = await axios.get(`/api/projects/${projectId}`);
-      setProject(response.data);
-    } catch (error) {
-      console.error("Error rejecting user:", error);
-      alert("Error rejecting user");
+    if (
+      confirm(
+        `You are rejecting the user with the following email-id: ${userEmail}. Are you sure because this action is irreversible?`
+      )
+    ) {
+      try {
+        await axios.post(`/api/projects/${projectId}/rejectUser`, {
+          userEmail,
+        });
+        alert("User rejected");
+        // Refresh the project details
+        const response = await axios.get(`/api/projects/${projectId}`);
+        setProject(response.data);
+      } catch (error) {
+        console.error("Error rejecting user:", error);
+        alert("Error rejecting user");
+      }
     }
   };
 
@@ -126,6 +150,10 @@ export default function ProjectDetails() {
       // Add any additional logic or feedback you want to provide after copying the email
       console.log(`Email ${email} copied to clipboard.`);
     }
+  };
+
+  const handleCopyAllEmails = (emails: string) => {
+    navigator.clipboard.writeText(emails);
   };
 
   return (
@@ -270,18 +298,42 @@ export default function ProjectDetails() {
             {project?.f === userEmail && (
               <div className="mt-4">
                 <h2 className="text-lg font-bold mt-4">Accepted users list:</h2>
+                <div className="mt-4">
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                    onClick={() => handleCopyAllEmails(project.h.join("\n"))}
+                  >
+                    Copy Accepted Email list
+                  </button>
+                </div>
                 {project.h.map((user) => (
                   <div key={user}>
                     <p>{user}</p>
                   </div>
                 ))}
                 <h2 className="text-lg font-bold mt-4">Rejected users list:</h2>
+                <div className="mt-4">
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                    onClick={() => handleCopyAllEmails(project.j.join("\n"))}
+                  >
+                    Copy Rejected Email list
+                  </button>
+                </div>
                 {project.j.map((user) => (
                   <div key={user}>
                     <p>{user}</p>
                   </div>
                 ))}
                 <h2 className="text-lg font-bold mt-4">Pending users list:</h2>
+                <div className="mt-4">
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                    onClick={() => handleCopyAllEmails(project.i.join("\n"))}
+                  >
+                    Copy Pending Email list
+                  </button>
+                </div>
                 {project.i.map((user) => (
                   <div key={user} className="flex flex-col items-start">
                     <p>{user}</p>

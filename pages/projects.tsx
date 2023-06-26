@@ -36,7 +36,7 @@ export default function Projects({}: ProjectsProps) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/projects")
+    fetch("/api/protected-nextjs-hashed")
       .then((response) => response.json())
       .then((data) => {
         setIsLoading(false);

@@ -26,7 +26,9 @@ const Profile = (props: { session: any }) => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.get(`/api/projects?userEmail=${email}`);
+        const response = await axios.get(
+          `/api/protected-nextjs-hashed?userEmail=${email}`
+        );
         setProjects(response.data);
       } catch (error) {
         console.error("Error fetching projects:", error);

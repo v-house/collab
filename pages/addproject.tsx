@@ -49,7 +49,7 @@ export default function AddProject() {
       };
 
       try {
-        const response = await axios.post("/api/addproject", projectData);
+        const response = await axios.post("/api/cproject", projectData);
         console.log("Project created successfully:", response.data);
 
         setTitle("");

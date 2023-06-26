@@ -28,7 +28,7 @@ function FavoriteProjects({ favoriteRoles }: ProjectsProps) {
   const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
 
   useEffect(() => {
-    fetch("/api/projects")
+    fetch("/api/protected-nextjs-hashed")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);

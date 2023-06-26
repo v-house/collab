@@ -6,6 +6,7 @@ import Navboard from "../components/Navboard";
 import Footer from "../components/Footerrights";
 import Head from "next/head";
 import "../styles/scrollbar.css";
+import { Analytics } from "@vercel/analytics/react";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -19,6 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </SessionProvider>
       <Footer />
+      <Analytics />
     </>
   );
 }

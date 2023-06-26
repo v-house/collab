@@ -87,10 +87,11 @@ const Profile = (props: { session: any }) => {
               {userProjects.map((project: any) => (
                 <div
                   key={project._id}
-                  className="bg-white rounded-md shadow p-4 w-64 mb-4"
+                  className="bg-white rounded-md shadow flex-shrink-0 p-4 max-w-lg mb-4"
                 >
                   <div className="flex flex-col">
-                    <h3 className="font-bold truncate text-lg">{project.a}</h3>
+                    <h3 className="font-bold truncate">{project.a}</h3>
+
                     <p className="text-gray-500">
                       <b>Role: </b>
                       {project.c}

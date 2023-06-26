@@ -26,13 +26,27 @@ interface ProjectsProps {
   projects: Project[];
 }
 
-export default function Projects({ projects }: ProjectsProps) {
+export default function Projects({}: ProjectsProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredRoles, setFilteredRoles] = useState<string[]>([]);
   const [roleCounts, setRoleCounts] = useState<Record<string, number>>({});
   const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
   const [favoriteRoles, setFavoriteRoles] = useState<string[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/projects")
+      .then((response) => response.json())
+      .then((data) => {
+        setIsLoading(false);
+        setProjects(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching projects:", error);
+      });
+  }, []);
 
   useEffect(() => {
     const counts: Record<string, number> = {};
@@ -104,6 +118,18 @@ export default function Projects({ projects }: ProjectsProps) {
   };
 
   const hasSearchResults = filteredRoles.length > 0;
+
+  if (isLoading) {
+    return (
+      <>
+        <div className="container mx-auto p-4">
+          <div className="container mx-auto p-4">
+            <div>Loading...</div>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -244,22 +270,4 @@ export default function Projects({ projects }: ProjectsProps) {
       <ReqFavorites />
     </>
   );
-}
-
-export async function getServerSideProps() {
-  try {
-    const client = await clientPromise;
-    const db = client.db("projectcollaborate");
-
-    const projects = await db.collection("projects").find({}).toArray();
-
-    return {
-      props: { projects: JSON.parse(JSON.stringify(projects)) },
-    };
-  } catch (e) {
-    console.error(e);
-    return {
-      props: { projects: [] },
-    };
-  }
 }

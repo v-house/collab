@@ -243,7 +243,7 @@ export default function ProjectDetails() {
                 </div>
               ) : (
                 <p className="mt-4 text-red-500">
-                  Entry taking time has expired
+                  Entry taking time has expired.
                 </p>
               ))}
 
@@ -269,12 +269,6 @@ export default function ProjectDetails() {
 
             {project?.f === userEmail && (
               <div className="mt-4">
-                <button
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={handleDeleteProject}
-                >
-                  Delete Project
-                </button>
                 <h2 className="text-lg font-bold mt-4">Accepted users list:</h2>
                 {project.h.map((user) => (
                   <div key={user}>
@@ -313,6 +307,12 @@ export default function ProjectDetails() {
                     </div>
                   </div>
                 ))}
+                <button
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-12"
+                  onClick={handleDeleteProject}
+                >
+                  Delete Project
+                </button>
               </div>
             )}
           </div>

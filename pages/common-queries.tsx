@@ -30,12 +30,12 @@ export default function IndexPage() {
 
   return (
     <div className="flex items-center justify-center bg-gray-100 py-8">
-      <div className="max-w-md w-full">
+      <div className="max-w-3xl w-full lg:w-3/4">
         <h1 className="text-3xl font-bold mb-8 p-8">Frequently faced Issues</h1>
         {queries.map((query) => (
           <div
             key={query.id}
-            className={`bg-white rounded-lg shadow-lg mb-4 ${
+            className={`bg-white rounded-md shadow-lg mb-4 ${
               openQueryId === query.id ? "border-blue-500" : "border-gray-200"
             }`}
           >
@@ -49,9 +49,9 @@ export default function IndexPage() {
                 <h2 className="text-lg font-semibold text-left">
                   {query.question}
                 </h2>
-                <div className="transform transition-transform">
+                <div className="ml-2 transition-transform duration-2000">
                   <svg
-                    className={`w-6 h-6 ml-2 ${
+                    className={`w-6 h-6 ${
                       openQueryId === query.id ? "rotate-180" : ""
                     }`}
                     fill="none"
@@ -75,6 +75,11 @@ export default function IndexPage() {
             )}
           </div>
         ))}
+        <div className="p-4 text-center">
+          <p>
+            If your query is still unresolved, you can email us at xyz@gmail.com
+          </p>
+        </div>
       </div>
     </div>
   );

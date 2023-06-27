@@ -259,7 +259,7 @@ export default function ProjectDetails() {
               </div>
 
               <div>
-                <h2 className="text-lg font-bold">Traits Mentioned:</h2>
+                <h2 className="text-lg font-bold">Required skills:</h2>
                 <p>{project?.l}</p>
               </div>
               <div>
@@ -375,74 +375,96 @@ export default function ProjectDetails() {
 
             {project?.f === userEmail && (
               <div className="mt-4">
-                <h2 className="text-lg font-bold mt-4">Accepted users list:</h2>
-                <div className="mt-4">
-                  <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-                    onClick={() => handleCopyAllEmails(project.h.join("\n"))}
-                  >
-                    Copy Accepted Email list
-                  </button>
-                </div>
-                {project.h.map((user) => (
-                  <div key={user}>
-                    <p>{user}</p>
-                  </div>
-                ))}
-                <h2 className="text-lg font-bold mt-4">Rejected users list:</h2>
-                <div className="mt-4">
-                  <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-                    onClick={() => handleCopyAllEmails(project.j.join("\n"))}
-                  >
-                    Copy Rejected Email list
-                  </button>
-                </div>
-                {project.j.map((user) => (
-                  <div key={user}>
-                    <p>{user}</p>
-                  </div>
-                ))}
-                <h2 className="text-lg font-bold mt-4">Pending users list:</h2>
-                <div className="mt-4">
-                  <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-                    onClick={() => handleCopyAllEmails(project.i.join("\n"))}
-                  >
-                    Copy Pending Email list
-                  </button>
-                </div>
-                {project.i.map((user) => (
-                  <div key={user} className="flex flex-col items-start">
-                    <p>{user}</p>
-                    <div className="mt-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="border rounded shadow-md p-4">
+                    <h2 className="text-lg font-bold mt-4">
+                      Accepted users list:
+                    </h2>
+                    <div className="mt-4">
                       <button
-                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded mr-1 mb-1"
-                        onClick={() => handleAcceptUser(user)}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                        onClick={() =>
+                          handleCopyAllEmails(project.h.join("\n"))
+                        }
                       >
-                        Accept
-                      </button>
-                      <button
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded mr-1 mb-1"
-                        onClick={() => handleRejectUser(user)}
-                      >
-                        Reject
-                      </button>
-                      <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-1 mb-1"
-                        onClick={() => handleCopyEmail(user)}
-                      >
-                        Copy Email
+                        Copy Accepted Email list
                       </button>
                     </div>
+                    {project.h.map((user) => (
+                      <div key={user} className="flex items-center">
+                        <p>{user}</p>
+                      </div>
+                    ))}
                   </div>
-                ))}
-                <button
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-12"
-                  onClick={handleDeleteProject}
-                >
-                  Delete Project
-                </button>
+                  <div className="border rounded shadow-md p-4">
+                    <h2 className="text-lg font-bold mt-4">
+                      Rejected users list:
+                    </h2>
+                    <div className="mt-4">
+                      <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                        onClick={() =>
+                          handleCopyAllEmails(project.j.join("\n"))
+                        }
+                      >
+                        Copy Rejected Email list
+                      </button>
+                    </div>
+                    {project.j.map((user) => (
+                      <div key={user} className="flex items-center">
+                        <p>{user}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="border rounded shadow-md p-4">
+                    <h2 className="text-lg font-bold mt-4">
+                      Pending users list:
+                    </h2>
+                    <div className="mt-4">
+                      <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                        onClick={() =>
+                          handleCopyAllEmails(project.i.join("\n"))
+                        }
+                      >
+                        Copy Pending Email list
+                      </button>
+                    </div>
+                    {project.i.map((user) => (
+                      <div key={user} className="flex flex-col items-start">
+                        <p>{user}</p>
+                        <div className="mt-2">
+                          <button
+                            className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded mr-1 mb-1"
+                            onClick={() => handleAcceptUser(user)}
+                          >
+                            Accept
+                          </button>
+                          <button
+                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded mr-1 mb-1"
+                            onClick={() => handleRejectUser(user)}
+                          >
+                            Reject
+                          </button>
+                          <button
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-1 mb-1"
+                            onClick={() => handleCopyEmail(user)}
+                          >
+                            Copy Email
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex justify-center mt-8">
+                  <button
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={handleDeleteProject}
+                  >
+                    Delete Project
+                  </button>
+                </div>
               </div>
             )}
           </div>

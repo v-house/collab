@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { getSession, useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function AddProject() {
   const [title, setTitle] = useState("");
@@ -17,6 +18,8 @@ export default function AddProject() {
   const [pendingLink, setPendingLink] = useState("");
   const [acceptedLink, setAcceptedLink] = useState("");
   const [rejectedLink, setRejectedLink] = useState("");
+  const [termsChecked, setTermsChecked] = useState(false);
+  const [formError, setFormError] = useState(false);
 
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -26,6 +29,11 @@ export default function AddProject() {
 
     if (status !== "authenticated") {
       router.push("/auth/signin");
+      return;
+    }
+
+    if (!termsChecked) {
+      setFormError(true);
       return;
     }
 
@@ -84,7 +92,7 @@ export default function AddProject() {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6">
+    <div className="max-w-3xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">Create Project</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -191,7 +199,7 @@ export default function AddProject() {
 
         <div className="mt-4">
           <label htmlFor="expectedTraits" className="block font-bold mb-1">
-            Expected Traits:
+            Required skills:
           </label>
           <textarea
             id="expectedTraits"
@@ -223,19 +231,18 @@ export default function AddProject() {
             htmlFor="advantagesCollaboration"
             className="block font-bold mb-1"
           >
-            Advantages of Collaboration:
+            Advantages of Collaboration (optional):
           </label>
           <textarea
             id="advantagesCollaboration"
             value={advantagesCollaboration}
             onChange={(e) => setAdvantagesCollaboration(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
-            required
           />
         </div>
         <div>
           <label htmlFor="pendingLink" className="block font-bold mb-1">
-            Link for pending users only:
+            Link for pending users only (optional):
           </label>
           <textarea
             id="pendingLink"
@@ -246,7 +253,7 @@ export default function AddProject() {
         </div>
         <div>
           <label htmlFor="acceptedLink" className="block font-bold mb-1">
-            Link for accepted users only:
+            Link for accepted users only (optional):
           </label>
           <textarea
             id="acceptedLink"
@@ -257,7 +264,7 @@ export default function AddProject() {
         </div>
         <div>
           <label htmlFor="rejectedLink" className="block font-bold mb-1">
-            Link for rejected users only:
+            Link for rejected users only (optional):
           </label>
           <textarea
             id="rejectedLink"
@@ -266,9 +273,36 @@ export default function AddProject() {
             className="w-full p-2 border border-gray-300 rounded"
           />
         </div>
+        <div className="mt-4">
+          <label htmlFor="terms" className="flex items-center">
+            <input
+              type="checkbox"
+              id="terms"
+              checked={termsChecked}
+              onChange={(e) => {
+                setTermsChecked(e.target.checked);
+                setFormError(false);
+              }}
+              className="mr-2"
+            />
+            <span>
+              I have read and agree to the{" "}
+              <Link href={"/"} legacyBehavior>
+                <a className="text-blue-500 underline">terms and conditions</a>
+              </Link>{" "}
+              to be followed by a project manager.
+            </span>
+          </label>
+
+          {formError && (
+            <p className="text-red-500 text-sm mt-1">
+              Please agree to the <a>terms and conditions</a>.
+            </p>
+          )}
+        </div>
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4"
         >
           Create
         </button>

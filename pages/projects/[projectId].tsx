@@ -20,6 +20,9 @@ interface Project {
   m: string; // Duties and Responsibilities
   n: string; // Advantages of Collaboration
   o: number; // Available seats
+  p: string; // Pending user's link
+  q: string; // Accepted user's link
+  r: string; // Rejected user's link
 }
 
 export default function ProjectDetails() {
@@ -68,10 +71,11 @@ export default function ProjectDetails() {
         });
         alert("Request for collaboration sent");
         // Refresh the project details
-        const response = await axios.get(`/api/projects/${projectId}`);
+        const response = await axios.get(
+          `/api/protected-hashed-nextjs/${projectId}`
+        );
         setProject(response.data);
       } catch (error) {
-        console.error("Error asking for collaboration:", error);
         alert("Error asking for collaboration");
       }
     }
@@ -89,7 +93,9 @@ export default function ProjectDetails() {
         });
         alert("User accepted");
         // Refresh the project details
-        const response = await axios.get(`/api/projects/${projectId}`);
+        const response = await axios.get(
+          `/api/protected-hashed-nextjs/${projectId}`
+        );
         setProject(response.data);
       } catch (error) {
         console.error("Error accepting user:", error);
@@ -110,7 +116,9 @@ export default function ProjectDetails() {
         });
         alert("User rejected");
         // Refresh the project details
-        const response = await axios.get(`/api/projects/${projectId}`);
+        const response = await axios.get(
+          `/api/protected-hashed-nextjs/${projectId}`
+        );
         setProject(response.data);
       } catch (error) {
         console.error("Error rejecting user:", error);
@@ -231,7 +239,7 @@ export default function ProjectDetails() {
                   rel="noopener noreferrer"
                   className="text-blue-500 hover:text-blue-700"
                 >
-                  {project?.k}
+                  Link
                 </a>
                 <button
                   onClick={() => {
@@ -283,8 +291,8 @@ export default function ProjectDetails() {
             <h1 className="text-2xl font-bold">Project Updates</h1>
 
             {project?.f !== userEmail &&
-              !project?.h.includes(userEmail) &&
-              !project?.j.includes(userEmail) &&
+              !project?.h?.includes(userEmail) &&
+              !project?.j?.includes(userEmail) &&
               (project?.e && new Date() <= new Date(project?.e) ? (
                 <div className="mt-4">
                   <button
@@ -300,24 +308,69 @@ export default function ProjectDetails() {
                 </p>
               ))}
 
-            {project?.i.includes(userEmail) && (
-              <div className="mt-4">
-                <p className="text-yellow-500">
-                  Your entry is pending for acceptance.
-                </p>
-              </div>
+            {project?.i?.includes(userEmail) && (
+              <>
+                <div className="mt-4">
+                  <p className="text-yellow-500">
+                    Your entry is pending for acceptance.
+                  </p>
+                </div>
+                <div className="mt-4">
+                  {project.p && (
+                    <p className="text-blue-500">
+                      <a
+                        href={project.p}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Link for pending users
+                      </a>
+                    </p>
+                  )}
+                </div>
+              </>
             )}
 
-            {project?.j.includes(userEmail) && (
-              <p className="mt-4 text-red-500">You have been rejected.</p>
+            {project?.j?.includes(userEmail) && (
+              <>
+                <p className="mt-4 text-red-500">You have been rejected.</p>
+                <div className="mt-4">
+                  {project.r && (
+                    <p className="text-blue-500">
+                      <a
+                        href={project.r}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Link for rejected users
+                      </a>
+                    </p>
+                  )}
+                </div>
+              </>
             )}
 
-            {project?.h.includes(userEmail) && (
-              <div className="mt-4">
-                <p className="text-green-500">
-                  You are accepted. Contact the project manager: {project?.g}
-                </p>
-              </div>
+            {project?.h?.includes(userEmail) && (
+              <>
+                <div className="mt-4">
+                  <p className="text-green-500">
+                    You are accepted. Contact the project manager: {project?.g}
+                  </p>
+                </div>
+                <div className="mt-4">
+                  {project.q && (
+                    <p className="text-blue-500">
+                      <a
+                        href={project.q}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Link for accepted users
+                      </a>
+                    </p>
+                  )}
+                </div>
+              </>
             )}
 
             {project?.f === userEmail && (

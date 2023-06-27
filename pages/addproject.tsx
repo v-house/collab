@@ -14,6 +14,9 @@ export default function AddProject() {
   const [dutiesResponsibilities, setDutiesResponsibilities] = useState("");
   const [advantagesCollaboration, setAdvantagesCollaboration] = useState("");
   const [availableSeats, setAvailableSeats] = useState(0);
+  const [pendingLink, setPendingLink] = useState("");
+  const [acceptedLink, setAcceptedLink] = useState("");
+  const [rejectedLink, setRejectedLink] = useState("");
 
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -46,6 +49,9 @@ export default function AddProject() {
         m: dutiesResponsibilities,
         n: advantagesCollaboration,
         o: availableSeats,
+        p: pendingLink,
+        q: acceptedLink,
+        r: rejectedLink,
       };
 
       try {
@@ -225,6 +231,39 @@ export default function AddProject() {
             onChange={(e) => setAdvantagesCollaboration(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
             required
+          />
+        </div>
+        <div>
+          <label htmlFor="pendingLink" className="block font-bold mb-1">
+            Link for pending users only:
+          </label>
+          <textarea
+            id="pendingLink"
+            value={pendingLink}
+            onChange={(e) => setPendingLink(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+        </div>
+        <div>
+          <label htmlFor="acceptedLink" className="block font-bold mb-1">
+            Link for accepted users only:
+          </label>
+          <textarea
+            id="acceptedLink"
+            value={acceptedLink}
+            onChange={(e) => setAcceptedLink(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+        </div>
+        <div>
+          <label htmlFor="rejectedLink" className="block font-bold mb-1">
+            Link for rejected users only:
+          </label>
+          <textarea
+            id="rejectedLink"
+            value={rejectedLink}
+            onChange={(e) => setRejectedLink(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded"
           />
         </div>
         <button

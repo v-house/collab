@@ -19,6 +19,9 @@ interface Project {
   m: string; // Duties and Responsibilities
   n: string; // Advantages of Collaboration
   o: number; // Available Seats
+  p: string; // Pending user's link
+  q: string; // Accepted user's link
+  r: string; // Rejected user's link
 }
 
 interface ProjectsProps {

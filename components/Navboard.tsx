@@ -6,8 +6,7 @@ const Navboard = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop =
-        window.pageYOffset || document.documentElement.scrollTop;
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
       setIsSticky(scrollTop > 40);
     };
 
@@ -21,7 +20,9 @@ const Navboard = () => {
   return (
     <nav
       className={`bg-gray-800 ${
-        isSticky ? "fixed top-0 left-0 w-full z-50" : ""
+        isSticky
+          ? "fixed top-0 left-0 w-full z-50 transition-all duration-300"
+          : ""
       }`}
     >
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">

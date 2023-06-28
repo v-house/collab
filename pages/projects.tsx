@@ -42,13 +42,14 @@ export default function Projects({}: ProjectsProps) {
     fetch("/api/protected-nextjs-hashed")
       .then((response) => response.json())
       .then((data) => {
-        setIsLoading(false);
         setProjects(data);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching projects:", error);
+        setIsLoading(false);
       });
-  }, []);
+  }, []); // Empty dependency array to run the effect only once
 
   useEffect(() => {
     const counts: Record<string, number> = {};
@@ -83,7 +84,7 @@ export default function Projects({}: ProjectsProps) {
       favoriteRoles.includes(project.c)
     );
     setFilteredProjects(filtered);
-  }, [favoriteRoles]);
+  }, [favoriteRoles, projects]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
@@ -123,13 +124,9 @@ export default function Projects({}: ProjectsProps) {
 
   if (isLoading) {
     return (
-      <>
-        <div className="container mx-auto p-4">
-          <div className="container mx-auto p-4">
-            <div>Loading...</div>
-          </div>
-        </div>
-      </>
+      <div className="flex items-center justify-center h-screen">
+        <p>Loading...</p>
+      </div>
     );
   }
 

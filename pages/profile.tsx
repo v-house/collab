@@ -1,14 +1,17 @@
+import React from "react";
 import { getSession, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import ReqFavorites from "../components/requestfavorites";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import EmailContact from "../components/Collegeid";
 
 const Profile = (props: { session: any }) => {
   const router = useRouter();
   const [projects, setProjects] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
   const [loaderProgress, setLoaderProgress] = useState(100);
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
   const dialogTimeout = 5000; // Dialog box timeout in milliseconds
 
   // Redirect to sign-in page if user is not authenticated
@@ -30,6 +33,7 @@ const Profile = (props: { session: any }) => {
           `/api/protected-nextjs-hashed?userEmail=${email}`
         );
         setProjects(response.data);
+        setIsLoading(false); // Set loading state to false after data is fetched
       } catch (error) {
         console.error("Error fetching projects:", error);
       }
@@ -78,11 +82,21 @@ const Profile = (props: { session: any }) => {
   return (
     <>
       <ReqFavorites />
+      <EmailContact />
       <div className="bg-white p-4 rounded-md shadow">
         <h1 className="text-2xl font-bold">Welcome, {name}</h1>
         <p className="text-gray-500">Email: {email}</p>
 
-        {userProjects.length > 0 ? (
+        {isLoading ? ( // Render skeleton loading state while projects are being fetched
+          <div className="mt-4 space-y-4">
+            <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
+            <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
+            <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
+            <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
+            <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
+            <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
+          </div>
+        ) : userProjects.length > 0 ? (
           <div className="mt-4">
             <h2 className="text-lg font-bold">Projects by you</h2>
             <div className="flex overflow-x-auto space-x-4">

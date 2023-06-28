@@ -5,6 +5,7 @@ import ReqFavorites from "../components/requestfavorites";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import EmailContact from "../components/Collegeid";
+import SavedProjects from "../components/SavedProjects";
 
 const Profile = (props: { session: any }) => {
   const router = useRouter();
@@ -13,6 +14,7 @@ const Profile = (props: { session: any }) => {
   const [loaderProgress, setLoaderProgress] = useState(100);
   const [isLoading, setIsLoading] = useState(true); // Add loading state
   const dialogTimeout = 5000; // Dialog box timeout in milliseconds
+  const [savedProjects, setSavedProjects] = useState([]);
 
   // Redirect to sign-in page if user is not authenticated
   if (!props.session) {
@@ -39,7 +41,15 @@ const Profile = (props: { session: any }) => {
       }
     };
 
+    const fetchSavedProjects = () => {
+      const savedProjectsData = localStorage.getItem("savedProjects");
+      if (savedProjectsData) {
+        setSavedProjects(JSON.parse(savedProjectsData));
+      }
+    };
+
     fetchProjects();
+    fetchSavedProjects();
   }, [email]);
 
   // Handle sign-out
@@ -140,6 +150,12 @@ const Profile = (props: { session: any }) => {
             </button>
           </div>
         )}
+
+        <SavedProjects
+          projects={projects}
+          savedProjects={savedProjects}
+          setProjects={setProjects}
+        />
 
         {showDialog && (
           <div className="fixed inset-0 flex items-center justify-center z-50">

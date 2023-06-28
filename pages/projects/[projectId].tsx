@@ -54,6 +54,7 @@ export default function ProjectDetails() {
   const [userEmail, setUserEmail] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [copyButtonText, setCopyButtonText] = useState("Copy Link");
+  const [savedProjects, setSavedProjects] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchProjectDetails = async () => {
@@ -75,11 +76,40 @@ export default function ProjectDetails() {
       }
     };
 
+    const fetchSavedProjects = () => {
+      const savedProjectsStr = localStorage.getItem("savedProjects");
+      if (savedProjectsStr) {
+        const savedProjectsArr = JSON.parse(savedProjectsStr) as string[];
+        setSavedProjects(savedProjectsArr);
+      }
+    };
+
     if (projectId) {
       fetchProjectDetails();
       fetchUserEmail();
+      fetchSavedProjects();
     }
   }, [projectId]);
+
+  const handleSaveProject = (projectId: string) => {
+    if (projectId && !savedProjects.includes(projectId)) {
+      const updatedSavedProjects = [...savedProjects, projectId];
+      setSavedProjects(updatedSavedProjects);
+      localStorage.setItem(
+        "savedProjects",
+        JSON.stringify(updatedSavedProjects)
+      );
+    } else {
+      const updatedSavedProjects = savedProjects.filter(
+        (id) => id !== projectId
+      );
+      setSavedProjects(updatedSavedProjects);
+      localStorage.setItem(
+        "savedProjects",
+        JSON.stringify(updatedSavedProjects)
+      );
+    }
+  };
 
   const handleAskForCollaboration = async () => {
     if (
@@ -189,6 +219,14 @@ export default function ProjectDetails() {
           <div className="bg-white rounded-lg shadow-md p-6">
             <h1 className="text-2xl font-bold mb-4">Project Details</h1>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <button
+                onClick={() => handleSaveProject(project?._id)}
+                className="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded"
+              >
+                {savedProjects.includes(project?._id)
+                  ? "Unsave Project"
+                  : "Save Project"}
+              </button>
               <div>
                 <h2 className="text-lg font-bold">Project Title:</h2>
                 <p>{project?.a}</p>

@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { getSession } from "next-auth/react";
 import Loading from "../../components/Loading";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 interface Project {
   _id: string;
@@ -217,16 +218,20 @@ export default function ProjectDetails() {
       <div>
         <div className="container mx-auto p-4">
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h1 className="text-2xl font-bold mb-4">Project Details</h1>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="flex justify-between items-center mb-4">
+              <h1 className="text-2xl font-bold">Project Details</h1>
               <button
                 onClick={() => handleSaveProject(project?._id)}
-                className="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded"
+                className="bg-transparent text-gray-500 hover:text-gray-700 p-1 rounded-full"
               >
-                {savedProjects.includes(project?._id)
-                  ? "Unsave Project"
-                  : "Save Project"}
+                {savedProjects.includes(project?._id) ? (
+                  <AiFillHeart size={24} />
+                ) : (
+                  <AiOutlineHeart size={24} />
+                )}
               </button>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div>
                 <h2 className="text-lg font-bold">Project Title:</h2>
                 <p>{project?.a}</p>

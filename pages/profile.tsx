@@ -96,7 +96,7 @@ const Profile = (props: { session: any }) => {
       <div className="bg-white p-4 rounded-md shadow">
         <h1 className="text-2xl font-bold">Welcome, {name}</h1>
         <p className="text-gray-500">Email: {email}</p>
-
+        <h2 className="text-lg font-bold mt-4">Projects by you</h2>
         {isLoading ? ( // Render skeleton loading state while projects are being fetched
           <div className="mt-4 space-y-4">
             <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
@@ -108,7 +108,6 @@ const Profile = (props: { session: any }) => {
           </div>
         ) : userProjects.length > 0 ? (
           <div className="mt-4">
-            <h2 className="text-lg font-bold">Projects by you</h2>
             <div className="flex overflow-x-auto space-x-4">
               {userProjects.map((project: any) => (
                 <div
@@ -212,8 +211,7 @@ export async function getServerSideProps(context: any) {
   if (!session) {
     return {
       redirect: {
-        destination: "/auth/signin",
-        permanent: false,
+        destination: `/auth/signin?redirect=/profile`,
       },
     };
   }

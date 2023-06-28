@@ -21,6 +21,10 @@ export default function AddProject() {
   const [termsChecked, setTermsChecked] = useState(false);
   const [formError, setFormError] = useState(false);
 
+  const MAX_TITLE_LENGTH = 50;
+  const MAX_DETAILS_LENGTH_1 = 400;
+  const MAX_DETAILS_LENGTH_2 = 600;
+
   const { data: session, status } = useSession();
   const router = useRouter();
 
@@ -105,8 +109,12 @@ export default function AddProject() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="border border-gray-300 p-2 rounded w-full"
+            maxLength={MAX_TITLE_LENGTH}
             required
           />
+          <p className="text-gray-500 text-sm mt-1">
+            {title.length}/{MAX_TITLE_LENGTH} characters
+          </p>
         </div>
         <div>
           <label htmlFor="details" className="block font-bold mb-1">
@@ -117,8 +125,12 @@ export default function AddProject() {
             value={details}
             onChange={(e) => setDetails(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
+            maxLength={MAX_DETAILS_LENGTH_2}
             required
           />
+          <p className="text-gray-500 text-sm mt-1">
+            {details.length}/{MAX_DETAILS_LENGTH_2} characters
+          </p>
         </div>
 
         <div className="mt-4">
@@ -151,8 +163,12 @@ export default function AddProject() {
               value={customType}
               onChange={(e) => setCustomType(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded"
+              maxLength={MAX_TITLE_LENGTH}
               required
             />
+            <p className="text-gray-500 text-sm mt-1">
+              {customType.length}/{MAX_TITLE_LENGTH} characters
+            </p>
           </div>
         )}
 
@@ -166,6 +182,7 @@ export default function AddProject() {
             value={availableSeats}
             onChange={(e) => setAvailableSeats(parseInt(e.target.value))}
             className="w-full p-2 border border-gray-300 rounded"
+            max={1000}
             required
           />
         </div>
@@ -183,8 +200,11 @@ export default function AddProject() {
             max={addDays(new Date(), 30).toISOString().split("T")[0]}
             required
           />
+          <p className="text-gray-500 text-sm mt-1">
+            Can be chosen between tomorrow and 30 days from today.
+          </p>
         </div>
-        <div>
+        <div className="mt-4">
           <label htmlFor="externalLink" className="block font-bold mb-1">
             External Link:
           </label>
@@ -193,8 +213,10 @@ export default function AddProject() {
             value={externalLink}
             onChange={(e) => setExternalLink(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
+            maxLength={200}
             required
           />
+          <p className="text-gray-500 text-sm mt-1">Enter a valid link.</p>
         </div>
 
         <div className="mt-4">
@@ -206,8 +228,12 @@ export default function AddProject() {
             value={expectedTraits}
             onChange={(e) => setExpectedTraits(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
+            maxLength={MAX_DETAILS_LENGTH_1}
             required
           />
+          <p className="text-gray-500 text-sm mt-1">
+            {expectedTraits.length}/{MAX_DETAILS_LENGTH_1} characters
+          </p>
         </div>
 
         <div className="mt-4">
@@ -222,8 +248,12 @@ export default function AddProject() {
             value={dutiesResponsibilities}
             onChange={(e) => setDutiesResponsibilities(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
+            maxLength={MAX_DETAILS_LENGTH_1}
             required
           />
+          <p className="text-gray-500 text-sm mt-1">
+            {dutiesResponsibilities.length}/{MAX_DETAILS_LENGTH_1} characters
+          </p>
         </div>
 
         <div className="mt-4">
@@ -238,9 +268,13 @@ export default function AddProject() {
             value={advantagesCollaboration}
             onChange={(e) => setAdvantagesCollaboration(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
+            maxLength={MAX_DETAILS_LENGTH_1}
           />
+          <p className="text-gray-500 text-sm mt-1">
+            {advantagesCollaboration.length}/{MAX_DETAILS_LENGTH_1} characters
+          </p>
         </div>
-        <div>
+        <div className="mt-4">
           <label htmlFor="pendingLink" className="block font-bold mb-1">
             Link for pending users only (optional):
           </label>
@@ -249,9 +283,11 @@ export default function AddProject() {
             value={pendingLink}
             onChange={(e) => setPendingLink(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
+            maxLength={200}
           />
+          <p className="text-gray-500 text-sm mt-1">Enter a valid link.</p>
         </div>
-        <div>
+        <div className="mt-4">
           <label htmlFor="acceptedLink" className="block font-bold mb-1">
             Link for accepted users only (optional):
           </label>
@@ -260,9 +296,11 @@ export default function AddProject() {
             value={acceptedLink}
             onChange={(e) => setAcceptedLink(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
+            maxLength={200}
           />
+          <p className="text-gray-500 text-sm mt-1">Enter a valid link.</p>
         </div>
-        <div>
+        <div className="mt-4">
           <label htmlFor="rejectedLink" className="block font-bold mb-1">
             Link for rejected users only (optional):
           </label>
@@ -271,7 +309,9 @@ export default function AddProject() {
             value={rejectedLink}
             onChange={(e) => setRejectedLink(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
+            maxLength={200}
           />
+          <p className="text-gray-500 text-sm mt-1">Enter a valid link.</p>
         </div>
         <div className="mt-4">
           <label htmlFor="terms" className="flex items-center">
@@ -317,7 +357,7 @@ export async function getServerSideProps(context: any) {
   if (!session) {
     return {
       redirect: {
-        destination: "/auth/signin",
+        destination: `/auth/signin?redirect=/addproject`,
       },
     };
   }

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { getSession } from "next-auth/react";
+import Loading from "../../components/Loading";
 
 interface Project {
   _id: string;
@@ -28,7 +29,28 @@ interface Project {
 export default function ProjectDetails() {
   const router = useRouter();
   const { projectId } = router.query;
-  const [project, setProject] = useState<Project | null>(null);
+  const [project, setProject] = useState<Project>({
+    // Initialize with an empty object
+    _id: "",
+    a: "",
+    b: "",
+    c: "",
+    d: new Date(),
+    e: new Date(),
+    f: "",
+    g: "",
+    h: [],
+    i: [],
+    j: [],
+    k: "",
+    l: "",
+    m: "",
+    n: "",
+    o: 0,
+    p: "",
+    q: "",
+    r: "",
+  });
   const [userEmail, setUserEmail] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [copyButtonText, setCopyButtonText] = useState("Copy Link");
@@ -143,11 +165,7 @@ export default function ProjectDetails() {
   if (isLoading) {
     return (
       <>
-        <div className="container mx-auto p-4">
-          <div className="container mx-auto p-4">
-            <div>Loading...</div>
-          </div>
-        </div>
+        <Loading />
       </>
     );
   }

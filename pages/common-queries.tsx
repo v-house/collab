@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Transition } from "react-transition-group";
 
 const queries = [
   {
@@ -28,16 +29,29 @@ export default function IndexPage() {
     setOpenQueryId((prevId) => (prevId === id ? null : id));
   };
 
+  const duration = 10; // Transition duration in milliseconds
+
+  const defaultStyle = {
+    transition: `max-height ${duration}ms ease-in-out`,
+    maxHeight: "0px",
+    overflow: "hidden",
+  };
+
+  const transitionStyles: { [key: string]: React.CSSProperties } = {
+    entering: { maxHeight: "0px" },
+    entered: { maxHeight: "1000px" },
+    exiting: { maxHeight: "0px" },
+    exited: { maxHeight: "0px" },
+  };
+
   return (
     <div className="flex items-center justify-center bg-gray-100 py-8">
       <div className="max-w-3xl w-full lg:w-3/4">
-        <h1 className="text-3xl font-bold mb-8 p-8">Frequently faced Issues</h1>
+        <h1 className="text-3xl font-bold mb-8 p-8">Frequently Faced Issues</h1>
         {queries.map((query) => (
           <div
             key={query.id}
-            className={`bg-white rounded-md shadow-lg mb-4 ${
-              openQueryId === query.id ? "border-blue-500" : "border-gray-200"
-            }`}
+            className="bg-white rounded-md shadow-lg mb-4 border-gray-200"
           >
             <div
               className={`p-4 cursor-pointer ${
@@ -49,7 +63,7 @@ export default function IndexPage() {
                 <h2 className="text-lg font-semibold text-left">
                   {query.question}
                 </h2>
-                <div className="ml-2 transition-transform duration-2000">
+                <div className="ml-2">
                   <svg
                     className={`w-6 h-6 ${
                       openQueryId === query.id ? "rotate-180" : ""
@@ -68,11 +82,23 @@ export default function IndexPage() {
                 </div>
               </div>
             </div>
-            {openQueryId === query.id && (
-              <div className="p-4">
-                <p className="text-left">{query.answer}</p>
-              </div>
-            )}
+            <Transition
+              in={openQueryId === query.id}
+              timeout={duration}
+              unmountOnExit
+            >
+              {(state) => (
+                <div
+                  style={{
+                    ...defaultStyle,
+                    ...transitionStyles[state],
+                  }}
+                  className="p-4"
+                >
+                  <p className="text-left">{query.answer}</p>
+                </div>
+              )}
+            </Transition>
           </div>
         ))}
         <div className="p-4 text-center">

@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ReqFavorites from "../components/requestfavorites";
+import Loading from "../components/Loading";
 
 interface Project {
   _id: string;
@@ -124,9 +125,9 @@ export default function Projects({}: ProjectsProps) {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <p>Loading...</p>
-      </div>
+      <>
+        <Loading />
+      </>
     );
   }
 

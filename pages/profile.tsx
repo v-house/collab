@@ -15,6 +15,7 @@ const Profile = (props: { session: any }) => {
   const [isLoading, setIsLoading] = useState(true); // Add loading state
   const dialogTimeout = 5000; // Dialog box timeout in milliseconds
   const [savedProjects, setSavedProjects] = useState([]);
+  const [tapCount, setTapCount] = useState(0);
 
   // Redirect to sign-in page if user is not authenticated
   if (!props.session) {
@@ -87,6 +88,11 @@ const Profile = (props: { session: any }) => {
   const openDialog = () => {
     setShowDialog(true);
     setLoaderProgress(100);
+    if (tapCount < 4) {
+      setTapCount((prevCount) => prevCount + 1);
+    } else {
+      setTapCount(0);
+    }
   };
 
   return (
@@ -170,6 +176,14 @@ const Profile = (props: { session: any }) => {
         {showDialog && (
           <div className="fixed inset-0 flex items-center justify-center z-50">
             <div className="bg-white p-8 rounded-lg shadow-md w-80">
+              {tapCount > 3 && (
+                <button
+                  className="bg-blue-500 text-white px-2 py-1 rounded-md shadow-md text-sm mx-auto mt-2 mb-4 block"
+                  onClick={() => router.push("/admin-page-collab-iith")}
+                >
+                  Admin page
+                </button>
+              )}
               <div className="h-2 w-full bg-gray-200 rounded-full mb-4">
                 <div
                   className="h-full bg-gradient-to-r from-green-400 to-blue-500"
@@ -185,6 +199,7 @@ const Profile = (props: { session: any }) => {
                 And so are we happy for you! Come on! Let's go ahead and join
                 our hands to come together and collaborate.
               </p>
+
               <p className="text-sm mt-4 text-red-500">
                 <em>
                   ***Note: The message for you keeps updating, so please come

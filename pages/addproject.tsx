@@ -120,8 +120,9 @@ export default function AddProject() {
         </div>
 
         <div className="mt-4">
-          <label htmlFor="details" className="block font-bold mb-1">
+          <label htmlFor="details" className="font-bold flex items-center">
             Details:
+            <InfoIcon message="We respect your privacy, but provide atleast some details for the users to understand and show interest in your project." />
           </label>
           <textarea
             id="details"
@@ -191,8 +192,9 @@ export default function AddProject() {
         </div>
 
         <div className="mt-4">
-          <label htmlFor="expiringDate" className="block font-bold mb-1">
+          <label htmlFor="expiringDate" className="font-bold flex items-center">
             Expiring Date:
+            <InfoIcon message="No longer responses shall be taken after this time." />
           </label>
           <input
             type="datetime-local"
@@ -211,8 +213,9 @@ export default function AddProject() {
         </div>
 
         <div className="mt-4">
-          <label htmlFor="externalLink" className="block font-bold mb-1">
+          <label htmlFor="externalLink" className="font-bold flex items-center">
             External Link:
+            <InfoIcon message="Link for everyone." />
           </label>
           <textarea
             id="externalLink"
@@ -265,9 +268,10 @@ export default function AddProject() {
         <div className="mt-4">
           <label
             htmlFor="advantagesCollaboration"
-            className="block font-bold mb-1"
+            className="font-bold flex items-center"
           >
             Advantages of Collaboration (optional):
+            <InfoIcon message="This can attract more users." />
           </label>
           <textarea
             id="advantagesCollaboration"

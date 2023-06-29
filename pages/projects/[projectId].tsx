@@ -222,7 +222,7 @@ export default function ProjectDetails() {
               <h1 className="text-2xl font-bold">Project Details</h1>
               <button
                 onClick={() => handleSaveProject(project?._id)}
-                className="bg-transparent text-gray-500 hover:text-gray-700 p-1 rounded-full"
+                className="bg-transparent text-gray-800 hover:text-gray-600 p-1 rounded-full"
               >
                 {savedProjects.includes(project?._id) ? (
                   <AiFillHeart size={24} />

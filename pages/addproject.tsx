@@ -271,7 +271,6 @@ export default function AddProject() {
             className="font-bold flex items-center"
           >
             Advantages of Collaboration (optional):
-            <InfoIcon message="This can attract more users." />
           </label>
           <textarea
             id="advantagesCollaboration"

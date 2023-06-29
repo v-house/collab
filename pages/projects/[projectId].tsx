@@ -439,7 +439,7 @@ export default function ProjectDetails() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="border rounded shadow-md p-4">
                     <h2 className="text-lg font-bold mt-4">
-                      Accepted users list:
+                      Accepted users list ({project?.h?.length ?? 0}):
                     </h2>
                     <div className="mt-4">
                       <button
@@ -459,7 +459,7 @@ export default function ProjectDetails() {
                   </div>
                   <div className="border rounded shadow-md p-4">
                     <h2 className="text-lg font-bold mt-4">
-                      Rejected users list:
+                      Rejected users list ({project?.j?.length ?? 0}):
                     </h2>
                     <div className="mt-4">
                       <button
@@ -479,7 +479,7 @@ export default function ProjectDetails() {
                   </div>
                   <div className="border rounded shadow-md p-4">
                     <h2 className="text-lg font-bold mt-4">
-                      Pending users list:
+                      Pending users list ({project?.i?.length ?? 0}):
                     </h2>
                     <div className="mt-4">
                       <button

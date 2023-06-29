@@ -150,11 +150,22 @@ const Profile = (props: { session: any }) => {
           </div>
         )}
 
-        <SavedProjects
-          projects={projects}
-          savedProjects={savedProjects}
-          setProjects={setProjects}
-        />
+        {isLoading ? ( // Render skeleton loading state while projects are being fetched
+          <div className="mt-4 space-y-4">
+            <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
+            <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
+            <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
+            <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
+            <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
+            <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
+          </div>
+        ) : (
+          <SavedProjects
+            projects={projects}
+            savedProjects={savedProjects}
+            setProjects={setProjects}
+          />
+        )}
 
         {showDialog && (
           <div className="fixed inset-0 flex items-center justify-center z-50">

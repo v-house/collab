@@ -3,6 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { getSession, useSession } from "next-auth/react";
 import Link from "next/link";
+import InfoIcon from "../components/Ibutton";
 
 export default function AddProject() {
   const [title, setTitle] = useState("");
@@ -85,7 +86,7 @@ export default function AddProject() {
         console.error("Error creating project:", error);
       }
     } else {
-      console.error("Invalid expiry date");
+      alert("Invalid expiry date");
     }
   };
 
@@ -99,9 +100,10 @@ export default function AddProject() {
     <div className="max-w-3xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">Create Project</h1>
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="title" className="font-bold">
+        <div className="mt-4">
+          <label htmlFor="title" className="font-bold flex items-center">
             Title:
+            <InfoIcon message="Short and sweet titles are better" />
           </label>
           <input
             type="text"
@@ -116,7 +118,8 @@ export default function AddProject() {
             {title.length}/{MAX_TITLE_LENGTH} characters
           </p>
         </div>
-        <div>
+
+        <div className="mt-4">
           <label htmlFor="details" className="block font-bold mb-1">
             Details:
           </label>
@@ -192,18 +195,21 @@ export default function AddProject() {
             Expiring Date:
           </label>
           <input
-            type="date"
+            type="datetime-local"
             id="expiringDate"
             value={expiringDate}
             onChange={(e) => setExpiringDate(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
-            max={addDays(new Date(), 30).toISOString().split("T")[0]}
+            min={addDays(new Date(), 1).toISOString().slice(0, -8)}
+            max={addDays(new Date(), 30).toISOString().slice(0, -8)}
             required
           />
+
           <p className="text-gray-500 text-sm mt-1">
             Can be chosen between tomorrow and 30 days from today.
           </p>
         </div>
+
         <div className="mt-4">
           <label htmlFor="externalLink" className="block font-bold mb-1">
             External Link:
@@ -274,6 +280,7 @@ export default function AddProject() {
             {advantagesCollaboration.length}/{MAX_DETAILS_LENGTH_1} characters
           </p>
         </div>
+
         <div className="mt-4">
           <label htmlFor="pendingLink" className="block font-bold mb-1">
             Link for pending users only (optional):
@@ -287,6 +294,7 @@ export default function AddProject() {
           />
           <p className="text-gray-500 text-sm mt-1">Enter a valid link.</p>
         </div>
+
         <div className="mt-4">
           <label htmlFor="acceptedLink" className="block font-bold mb-1">
             Link for accepted users only (optional):
@@ -300,6 +308,7 @@ export default function AddProject() {
           />
           <p className="text-gray-500 text-sm mt-1">Enter a valid link.</p>
         </div>
+
         <div className="mt-4">
           <label htmlFor="rejectedLink" className="block font-bold mb-1">
             Link for rejected users only (optional):
@@ -313,6 +322,7 @@ export default function AddProject() {
           />
           <p className="text-gray-500 text-sm mt-1">Enter a valid link.</p>
         </div>
+
         <div className="mt-4">
           <label htmlFor="terms" className="flex items-center">
             <input
@@ -340,6 +350,7 @@ export default function AddProject() {
             </p>
           )}
         </div>
+
         <button
           type="submit"
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4"

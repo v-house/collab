@@ -9,23 +9,92 @@ const TermsAndConditions = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="p-4 bg-white rounded-lg shadow-lg">
-            <h3 className="text-xl font-bold mb-4">Project Creator</h3>
+            <h3 className="text-xl font-bold mb-4">As a Project Creator</h3>
             <ul className="list-disc pl-6">
-              <li>Create and manage projects.</li>
-              <li>Invite collaborators to your projects.</li>
-              <li>Set project requirements and guidelines.</li>
-              <li>Communicate with project collaborators.</li>
-              <li>Review and approve project deliverables.</li>
+              <li>
+                Provide accurate and truthful details when creating projects.
+              </li>
+              <li>
+                Include sufficient and relevant information related to the
+                project's objectives, requirements, and scope.
+              </li>
+              <li>
+                Complete the entire project selection procedure before
+                considering its deletion.
+              </li>
+              <li>
+                Ensure the use of appropriate and respectful language when
+                describing the project, refraining from any form of offensive,
+                discriminatory, or inappropriate content.
+              </li>
+              <li>
+                Respect and prioritize the confidentiality of any user's
+                interests or personal information received during the project
+                collaboration process, using such information solely for the
+                purpose of the specific project.
+              </li>
+              <li>
+                Actively engage with collaborators and respond to their
+                inquiries or requests in a timely manner.
+              </li>
+              <li>
+                Promote a collaborative and inclusive environment, fostering
+                equal opportunities for all potential collaborators.
+              </li>
+              <li>
+                Comply with any additional guidelines, policies, or legal
+                requirements set forth by the platform or organization
+                facilitating the project.
+              </li>
+              <li>
+                Understand that failure to adhere to these terms and conditions
+                may result in the removal of the project or other appropriate
+                actions as determined by the platform or organization.
+              </li>
             </ul>
           </div>
+
           <div className="p-4 bg-white rounded-lg shadow-lg">
-            <h3 className="text-xl font-bold mb-4">Project Collaborator</h3>
+            <h3 className="text-xl font-bold mb-4">
+              As a Project Collaborator
+            </h3>
             <ul className="list-disc pl-6">
-              <li>Browse and apply to join projects.</li>
-              <li>Collaborate with project creators and team members.</li>
-              <li>Contribute to project tasks and deliverables.</li>
-              <li>Communicate and coordinate with the project team.</li>
-              <li>Follow project guidelines and meet deadlines.</li>
+              <li>
+                Respect project timelines and adhere to agreed-upon deadlines.
+              </li>
+              <li>
+                Communicate effectively and promptly with the project manager
+                and other collaborators.
+              </li>
+              <li>
+                Contribute actively and meaningfully to the project's objectives
+                and tasks.
+              </li>
+              <li>
+                Maintain confidentiality and protect sensitive project
+                information.
+              </li>
+              <li>
+                Seek permission and obtain proper authorization before sharing
+                or distributing project-related content or materials.
+              </li>
+              <li>
+                Collaborate in a professional and respectful manner with other
+                team members.
+              </li>
+              <li>
+                Notify the project manager in case of any anticipated delays,
+                issues, or conflicts that may affect the project's progress.
+              </li>
+              <li>
+                Follow any additional guidelines or requirements specified by
+                the project manager or outlined in the project documentation.
+              </li>
+              <li>
+                Understand that failure to meet these terms and conditions may
+                result in consequences, such as being removed from the project
+                or facing other disciplinary actions.
+              </li>
             </ul>
           </div>
         </div>

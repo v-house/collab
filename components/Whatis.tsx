@@ -8,23 +8,38 @@ const Whatis = () => {
           What is Collab@IITH?
         </h2>
         <p className="text-lg text-center">
-          Collab@IITH is an innovative platform that brings together individuals
-          and teams from diverse backgrounds to collaborate on exciting
-          projects. It serves as a hub for connecting like-minded individuals
-          and fostering collaboration in various fields, ranging from research
-          and innovation to entrepreneurship and social initiatives.
+          Collab@IITH is an exclusive platform created for the IITH Community to
+          foster collaboration. It provides a space where individuals and teams
+          can collaborate on a wide range of projects, including both formal and
+          informal initiatives. Whether you need a cricket team for the
+          college's next DIESTA cricket tournament, a team for participating in
+          a hackathon outside IITH, a dance crew for the freshers party, or a
+          prom partner for the next prom night, Collab@IITH can help you find
+          the right people. Just make sure to submit your project details in a
+          timely manner to ensure maximum participation.
         </p>
         <p className="text-lg text-center mt-4">
-          Our platform empowers users by providing them with opportunities to
-          network, exchange ideas, and work together on projects of mutual
-          interest. Whether you're a student, researcher, entrepreneur, or
-          professional, Collab@IITH offers a vibrant community where you can
-          explore new collaborations, showcase your skills, and contribute to
-          meaningful projects that make a difference.
+          Why Collab@IITH? It brings everything together in one place, allowing
+          you to showcase your project details in the best possible way and
+          efficiently manage collaborators. It serves as the initial phase of
+          interest-based project selection, helping you find the right
+          individuals for your project.
         </p>
         <p className="text-lg text-center mt-4">
-          Join Collab@IITH today and unlock a world of collaborative
-          possibilities. Let's collaborate, innovate, and create together!
+          Why not use other collaboration platforms? By using Collab@IITH, you
+          can effectively publicize your project to reach individuals with the
+          expertise and interest you require. Furthermore, providing
+          opportunities to the IITH Community benefits everyone involved. It
+          promotes the growth of our own college community and enables personal
+          offline communication with potential collaborators. Additionally, you
+          can explore and discover a wide range of available projects, gaining
+          insights from diverse perspectives.
+        </p>
+        <p className="text-lg text-center mt-4">
+          So why wait? If you need someone to join your team, go ahead and hire
+          them. If you're interested in contributing to active projects,
+          collaborate with other ongoing initiatives. Let's collaborate, work
+          together, and grow as a community.
         </p>
       </div>
     </div>

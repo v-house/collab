@@ -161,9 +161,6 @@ const Profile = (props: { session: any }) => {
             <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
             <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
             <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
-            <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
-            <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
-            <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
           </div>
         ) : (
           <SavedProjects
@@ -196,15 +193,12 @@ const Profile = (props: { session: any }) => {
               </div>
               <h2 className="text-xl font-bold mb-4">A Message for You</h2>
               <p className="text-lg">
-                And so are we happy for you! Come on! Let's go ahead and join
-                our hands to come together and collaborate.
+                And so are we happy for you! Let's go come together and
+                collaborate.
               </p>
 
               <p className="text-sm mt-4 text-red-500">
-                <em>
-                  ***Note: The message for you keeps updating, so please come
-                  back here when you get back at collab@IITH
-                </em>
+                <em>***Note: Message keeps updating.</em>
               </p>
             </div>
           </div>

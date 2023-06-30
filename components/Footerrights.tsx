@@ -12,19 +12,19 @@ const Footer = () => {
               General Inquiries:
             </p>
             <a
-              href="mailto:info@yourcompany.com"
+              href="mailto:k.vivek.kumar.aka.vwake@gmail.com"
               className="text-blue-500 hover:text-blue-300"
             >
-              info@yourcompany.com
+              Reach out Collab@IITH
             </a>
           </div>
           <div className="mt-4">
             <p className="font-semibold text-lg text-white mb-2">Support:</p>
             <a
-              href="mailto:support@yourcompany.com"
+              href="mailto:roopakbrk28@gmail.com"
               className="text-blue-500 hover:text-blue-300"
             >
-              support@yourcompany.com
+              Support Collab@IITH
             </a>
           </div>
         </div>

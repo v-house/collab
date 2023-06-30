@@ -5,20 +5,54 @@ const queries = [
   {
     id: 1,
     question:
-      "You're welcome! I'm glad I could assist you. If you have any more questions, feel free to ask. Happy coding!",
-    answer: "Answer 1",
+      "How can I share documents like banners or posters with other users while creating a project?",
+    answer:
+      "To share documents or images with other users while creating a project, you can use the 'External link' option. Simply generate a link for your document or image and share it using the external link feature. You can share specific links with pending users, accepted users, or rejected users as needed.",
   },
   {
     id: 2,
-    question: "Question 2",
-    answer: "Answer 2",
+    question:
+      "Will I be able to see the link for pending users once I have been accepted or rejected for the project?",
+    answer:
+      "No, you will not be able to see the link for pending users. You can only access the link if you have been accepted or rejected for the project.",
   },
   {
     id: 3,
-    question:
-      "Very long question that may exceed the container width and need wrapping to a new line",
+    question: "Why am I seeing an 'Access Denied' page when signing in?",
     answer:
-      "Very long answer that may exceed the container width and need wrapping to a new line",
+      "If you are seeing an 'Access Denied' page when signing in, it is likely because you are using a Google account that is not associated with the IITH domain. The IITH domain refers to the @iith.ac.in domain, and only accounts within this domain have access to the website. Please ensure that you sign in using an authorized IITH account.",
+  },
+  {
+    id: 4,
+    question: "Can I edit my project details after creating it?",
+    answer:
+      "No, editing project details after creation is not allowed. This restriction is in place to avoid misleading or confusing other users who may have already viewed your project. If you need to make changes to your project, we recommend deleting it and creating a new one. If you encounter any issues, please contact us via email for assistance.",
+  },
+  {
+    id: 5,
+    question: "Is it possible to leave any project details empty?",
+    answer:
+      "While it is not encouraged to leave any project details empty, optional fields can be left blank. However, we recommend providing information for all required fields. If a particular detail is not applicable, you can mention 'None' as the value.",
+  },
+  {
+    id: 6,
+    question:
+      "I am unable to view the projects I saved earlier. How can I access them?",
+    answer:
+      "The projects you saved are stored locally on your device. If you are unable to view your saved projects, it is likely that the local storage on your device has been erased. Saved projects and favorite roles are tied to the same mechanism, so it is difficult to retrieve them once they are lost. We suggest saving them again or searching for them using the search bar on the available projects page. If you are using a different device where you haven't saved anything, we recommend searching for and saving them on that device as well.",
+  },
+  {
+    id: 7,
+    question: "Who has the authority to delete my project?",
+    answer:
+      "While the project owner has full control over the project presentation on the website, if any offensive or inappropriate content is found, the project may be temporarily disabled by the project manager or admin. The owner will be informed of the reason for its removal.",
+  },
+  {
+    id: 8,
+    question:
+      "I am unable to view a project that I previously accessed. Why is that?",
+    answer:
+      "If you are unable to view a project that you had accessed before, it is likely that the project has been deleted by the project manager or admin.",
   },
 ];
 
@@ -47,7 +81,9 @@ export default function IndexPage() {
   return (
     <div className="flex items-center justify-center bg-gray-100 py-8">
       <div className="max-w-3xl w-full lg:w-3/4">
-        <h1 className="text-3xl font-bold mb-8 p-8">Frequently Faced Issues</h1>
+        <h1 className="text-3xl font-bold mb-8 p-8">
+          Frequently Asked Questions
+        </h1>
         {queries.map((query) => (
           <div
             key={query.id}
@@ -103,7 +139,8 @@ export default function IndexPage() {
         ))}
         <div className="p-4 text-center">
           <p>
-            If your query is still unresolved, you can email us at xyz@gmail.com
+            If your query is still unresolved, you can email us at
+            k.vivek.kumar.aka.vwake@gmail.com
           </p>
         </div>
       </div>

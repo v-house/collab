@@ -18,24 +18,34 @@ export default function SignIn() {
         </h1>
 
         <div className="mb-6">
-          <h2 className="text-xl font-semibold mb-2">Why we require Sign in</h2>
+          <h2 className="text-xl font-semibold mb-2">
+            Why Sign In is Required
+          </h2>
           <ul className="list-disc list-inside">
-            <li>Condition 1</li>
-            <li>Condition 2</li>
-            <li>Condition 3</li>
-            {/* Add more conditions here */}
+            <li>
+              Access to most of the website's features is limited to the IITH
+              community only.
+            </li>
+            <li>
+              Projects may contain personal content that can only be shared with
+              authorized individuals.
+            </li>
+            <li>
+              Authentication is necessary to obtain your details for
+              collaboration purposes.
+            </li>
           </ul>
         </div>
 
         <div className="mb-6">
           <h2 className="text-xl font-semibold mb-2">
-            What we take from your Google account
+            Information We Collect from Your Google Account
           </h2>
           <ul className="list-disc list-inside">
-            <li>Access point 1</li>
-            <li>Access point 2</li>
-            <li>Access point 3</li>
-            {/* Add more access points here */}
+            <li>
+              We collect your name, email, and profile image for generating
+              session tokens.
+            </li>
           </ul>
         </div>
 

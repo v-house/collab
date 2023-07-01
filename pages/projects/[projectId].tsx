@@ -56,6 +56,7 @@ export default function ProjectDetails() {
   const [isLoading, setIsLoading] = useState(true);
   const [copyButtonText, setCopyButtonText] = useState("Copy Link");
   const [savedProjects, setSavedProjects] = useState<string[]>([]);
+  const [projectNotFound, setProjectNotFound] = useState(false);
 
   useEffect(() => {
     const fetchProjectDetails = async () => {
@@ -67,6 +68,8 @@ export default function ProjectDetails() {
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching project details:", error);
+        setProjectNotFound(true);
+        setIsLoading(false);
       }
     };
 
@@ -185,7 +188,7 @@ export default function ProjectDetails() {
       try {
         await axios.delete(`/api/projects/${projectId}/deleteProject`);
         alert("Project deleted");
-        router.push("/projects");
+        router.push("/profile");
       } catch (error) {
         console.error("Error deleting project:", error);
         alert("Error deleting project");
@@ -198,6 +201,19 @@ export default function ProjectDetails() {
       <>
         <Loading />
       </>
+    );
+  }
+
+  if (projectNotFound) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="max-w-md p-8 bg-white rounded-lg shadow-md">
+          <img src="/favicon.ico" alt="Favicon" className="mb-4 mx-auto" />
+          <h1 className="text-2xl font-bold text-center mb-8">
+            The project could have been deleted or temporarily erased.
+          </h1>
+        </div>
+      </div>
     );
   }
 
@@ -327,10 +343,16 @@ export default function ProjectDetails() {
                 <h2 className="text-lg font-bold">Duties:</h2>
                 <p>{project?.m}</p>
               </div>
-              <div>
-                <h2 className="text-lg font-bold">Advantages:</h2>
-                <p>{project?.n}</p>
-              </div>
+
+              {project?.n && (
+                <>
+                  <div>
+                    <h2 className="text-lg font-bold">Advantages:</h2>
+                    <p>{project?.n}</p>
+                  </div>
+                </>
+              )}
+
               <div>
                 <h2 className="text-lg font-bold">Seats Available:</h2>
                 <p>{project?.o}</p>

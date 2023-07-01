@@ -102,7 +102,7 @@ const Profile = (props: { session: any }) => {
       <div className="bg-white p-4 rounded-md shadow">
         <h1 className="text-2xl font-bold">Welcome, {name}</h1>
         <p className="text-gray-500">Email: {email}</p>
-        <h2 className="text-lg font-bold mt-4">Projects by you</h2>
+        <h2 className="text-lg font-bold mt-4">Projects made by you</h2>
         {isLoading ? ( // Render skeleton loading state while projects are being fetched
           <div className="mt-4 space-y-4">
             <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
@@ -151,7 +151,7 @@ const Profile = (props: { session: any }) => {
               className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md"
               onClick={() => router.push("/addproject")}
             >
-              Create Your First Project
+              Create a Project
             </button>
           </div>
         )}

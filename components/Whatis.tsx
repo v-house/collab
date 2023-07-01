@@ -2,7 +2,7 @@ import React from "react";
 
 const Whatis = () => {
   return (
-    <div className="bg-gray-100 py-10">
+    <div className="py-10">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-6">
           What is Collab@IITH?

@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { getSession, useSession } from "next-auth/react";
 import Link from "next/link";
 import InfoIcon from "../components/Ibutton";
+import Select from "react-select";
 
 export default function AddProject() {
   const [title, setTitle] = useState("");
@@ -25,6 +26,108 @@ export default function AddProject() {
   const MAX_TITLE_LENGTH = 50;
   const MAX_DETAILS_LENGTH_1 = 400;
   const MAX_DETAILS_LENGTH_2 = 600;
+
+  const roleOptions = [
+    { value: "Other", label: "Others" },
+    { value: "Frontend Developer", label: "Frontend Developer" },
+    { value: "Backend Developer", label: "Backend Developer" },
+    { value: "Full-stack Developer", label: "Full-stack Developer" },
+    { value: "Mobile App Developer", label: "Mobile App Developer" },
+    { value: "Software Engineer", label: "Software Engineer" },
+    { value: "Data Analyst", label: "Data Analyst" },
+    { value: "Database Manager", label: "Database Manager" },
+    { value: "Cybersecurity Specialist", label: "Cybersecurity Specialist" },
+    { value: "UI/UX Designer", label: "UI/UX Designer" },
+    { value: "Graphic Designer", label: "Graphic Designer" },
+    { value: "Network Engineer", label: "Network Engineer" },
+    { value: "DevOps Engineer", label: "DevOps Engineer" },
+    { value: "AI/ML Engineer", label: "AI/ML Engineer" },
+    { value: "Cloud Practitioner", label: "Cloud Practitioner" },
+    { value: "Game Developer", label: "Game Developer" },
+    { value: "Computer Vision Engineer", label: "Computer Vision Engineer" },
+    { value: "Robotics Engineer", label: "Robotics Engineer" },
+    { value: "Hardware Engineer", label: "Hardware Engineer" },
+    { value: "Project Manager", label: "Project Manager" },
+    { value: "Product Manager", label: "Product Manager" },
+    { value: "Marketing Coordinator", label: "Marketing Coordinator" },
+    { value: "Sales Representative", label: "Sales Representative" },
+    { value: "Business Analyst", label: "Business Analyst" },
+    { value: "Entrepreneur", label: "Entrepreneur" },
+    { value: "Financial Analyst", label: "Financial Analyst" },
+    { value: "Photographer", label: "Photographer" },
+    { value: "Videographer", label: "Videographer" },
+    { value: "Content Creator", label: "Content Creator" },
+    { value: "Illustrator", label: "Illustrator" },
+    { value: "Animator", label: "Animator" },
+    { value: "Musician", label: "Musician" },
+    { value: "Writer", label: "Writer" },
+    { value: "Blogger", label: "Blogger" },
+    { value: "Esports player", label: "Esports player" },
+    { value: "Social Media Manager", label: "Social Media Manager" },
+    { value: "Event Organizer", label: "Event Organizer" },
+    { value: "Football Player", label: "Football Player" },
+    { value: "Basketball Player", label: "Basketball Player" },
+    { value: "Tennis Player", label: "Tennis Player" },
+    { value: "Cricket Player", label: "Cricket Player" },
+    { value: "Swimmer", label: "Swimmer" },
+    { value: "Athlete", label: "Athlete" },
+    { value: "Yoga Instructor", label: "Yoga Instructor" },
+    { value: "Fitness Trainer", label: "Fitness Trainer" },
+    { value: "Mentor", label: "Mentor" },
+    { value: "Tutor", label: "Tutor" },
+    { value: "Volunteer", label: "Volunteer" },
+    { value: "Research Assistant", label: "Research Assistant" },
+    { value: "Peer Counselor", label: "Peer Counselor" },
+    { value: "Club President", label: "Club President" },
+    { value: "Fundraiser", label: "Fundraiser" },
+    { value: "Debater", label: "Debater" },
+    { value: "Artist", label: "Artist" },
+    { value: "Painter", label: "Painter" },
+    { value: "Actor/Actress", label: "Actor/Actress" },
+    { value: "Dancer", label: "Dancer" },
+    { value: "Choreographer", label: "Choreographer" },
+    { value: "Singer", label: "Singer" },
+    { value: "Instrumentalist", label: "Instrumentalist" },
+    { value: "Choir Member", label: "Choir Member" },
+    { value: "Model", label: "Model" },
+    { value: "Fashion Designer", label: "Fashion Designer" },
+    { value: "Event Planner", label: "Event Planner" },
+    { value: "Tour Guide", label: "Tour Guide" },
+    { value: "Translator", label: "Translator" },
+    { value: "Content Editor", label: "Content Editor" },
+    { value: "Journalist", label: "Journalist" },
+    { value: "Public Speaker", label: "Public Speaker" },
+    { value: "Host", label: "Host" },
+    { value: "Lab Assistant", label: "Lab Assistant" },
+    { value: "Teaching Assistant", label: "Teaching Assistant" },
+    { value: "Class Representative", label: "Class Representative" },
+    { value: "Coordinator", label: "Coordinator" },
+    { value: "Core", label: "Core" },
+    { value: "Sports Team Captain", label: "Sports Team Captain" },
+    { value: "Researcher", label: "Researcher" },
+    { value: "Peer Mentor", label: "Peer Mentor" },
+    { value: "Fundraiser/Producer", label: "Fundraiser/Producer" },
+    { value: "Event Coordinator", label: "Event Coordinator" },
+    { value: "Photography Assistant", label: "Photography Assistant" },
+    { value: "Video Editor", label: "Video Editor" },
+    { value: "Content Writer", label: "Content Writer" },
+    { value: "Social Media Coordinator", label: "Social Media Coordinator" },
+    { value: "Sports Team Player", label: "Sports Team Player" },
+    { value: "Student", label: "Student" },
+    { value: "Intern", label: "Intern" },
+    { value: "Freelancer", label: "Freelancer" },
+    { value: "Assistant", label: "Assistant" },
+    { value: "Team Member", label: "Team Member" },
+    { value: "Member", label: "Member" },
+  ];
+
+  const handleTypeOfPersonChange = (selectedOption: any) => {
+    setTypeOfPerson(selectedOption ? selectedOption.value : "");
+  };
+
+  const handleCustomTypeChange = (e: any) => {
+    setCustomType(e.target.value);
+  };
 
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -103,7 +206,7 @@ export default function AddProject() {
         <div className="mt-4">
           <label htmlFor="title" className="font-bold flex items-center">
             Title:
-            <InfoIcon message="Short and sweet titles are better" />
+            <InfoIcon message="Short and sweet titles sound better" />
           </label>
           <input
             type="text"
@@ -122,7 +225,7 @@ export default function AddProject() {
         <div className="mt-4">
           <label htmlFor="details" className="font-bold flex items-center">
             Details:
-            <InfoIcon message="We respect your privacy, but provide atleast some details for the users to understand and show interest in your project." />
+            <InfoIcon message="Provide enough data for users to understand about the project." />
           </label>
           <textarea
             id="details"
@@ -141,19 +244,16 @@ export default function AddProject() {
           <label htmlFor="typeOfPerson" className="block font-bold mb-1">
             Type of Person to hire:
           </label>
-          <select
+          <Select
             id="typeOfPerson"
-            value={typeOfPerson}
-            onChange={(e) => setTypeOfPerson(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded"
-            required
-          >
-            <option value="">Select Type</option>
-            <option value="Role 1">Role 1</option>
-            <option value="Role 2">Role 2</option>
-            <option value="Role 3">Role 3</option>
-            <option value="Other">Other</option>
-          </select>
+            value={roleOptions.find((option) => option.value === typeOfPerson)}
+            onChange={(selectedOption) =>
+              handleTypeOfPersonChange(selectedOption)
+            }
+            options={roleOptions}
+            className="w-full"
+            placeholder="Select Type"
+          />
         </div>
 
         {typeOfPerson === "Other" && (
@@ -165,7 +265,7 @@ export default function AddProject() {
               type="text"
               id="customType"
               value={customType}
-              onChange={(e) => setCustomType(e.target.value)}
+              onChange={handleCustomTypeChange}
               className="w-full p-2 border border-gray-300 rounded"
               maxLength={MAX_TITLE_LENGTH}
               required
@@ -183,7 +283,6 @@ export default function AddProject() {
           <input
             type="number"
             id="availableSeats"
-            value={availableSeats}
             onChange={(e) => setAvailableSeats(parseInt(e.target.value))}
             className="w-full p-2 border border-gray-300 rounded"
             max={1000}

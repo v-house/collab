@@ -12,13 +12,17 @@ const SavedProjects = (props: {
     router.push(`/projects/${projectId}`);
   };
 
+  const filteredSavedProjects = props.savedProjects.filter((projectId: any) =>
+    props.projects.some((p: { _id: any }) => p._id === projectId)
+  );
+
   return (
     <>
       <h2 className="text-lg font-bold mt-4">Saved Projects</h2>
-      {props.savedProjects.length > 0 && (
+      {filteredSavedProjects.length > 0 && (
         <div className="mt-2">
           <div className="flex overflow-x-auto space-x-4">
-            {props.savedProjects.map((projectId: any) => {
+            {filteredSavedProjects.map((projectId: any) => {
               const project = props.projects.find(
                 (p: { _id: any }) => p._id === projectId
               );
@@ -57,7 +61,7 @@ const SavedProjects = (props: {
         </div>
       )}
 
-      {props.savedProjects.length === 0 && (
+      {filteredSavedProjects.length === 0 && (
         <p className="mt-4 mb-4">
           No saved projects. You can save a project by going to the project
           details page.

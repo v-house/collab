@@ -1,53 +1,114 @@
-import React from "react";
+import React, { useState } from "react";
+import {
+  FaUsers,
+  FaProjectDiagram,
+  FaLightbulb,
+  FaHandshake,
+} from "react-icons/fa";
+import { motion } from "framer-motion";
 
-const MotivesAndAims = () => {
+const Whatis = () => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.5, ease: "easeInOut" },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeInOut" },
+    },
+    hover: {
+      scale: 1.05,
+      boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.15)",
+      transition: { duration: 0.3, ease: "easeInOut" },
+    },
+  };
+
   const motives = [
     {
-      title: "Foster Collaboration",
+      icon: <FaUsers className="text-indigo-600 text-5xl" />,
+      title: "Collaborative Community",
       description:
-        "Our platform aims to foster collaboration among individuals and teams by providing a space where they can connect, share ideas, and work together on projects of mutual interest. We believe that collaboration leads to innovative solutions and professional growth.",
+        "Collab@IITH is a vibrant platform where individuals and teams connect, share ideas, and collaborate on diverse projects. We believe that collaboration fuels innovation and professional growth.",
     },
     {
-      title: "Facilitate Networking",
+      icon: <FaProjectDiagram className="text-indigo-600 text-5xl" />,
+      title: "Efficient Networking",
       description:
-        "We strive to facilitate networking opportunities by connecting individuals based on their project needs. Our platform provides a network of experts and interested individuals from the IITH Community who can contribute to the success of your projects. Expand your professional network and collaborate with the right people.",
+        "Discover experts and like-minded individuals from the IITH Community who can contribute to the success of your projects. Our platform facilitates efficient networking and empowers you to connect with the right people.",
     },
     {
-      title: "Promote Innovation",
+      icon: <FaLightbulb className="text-indigo-600 text-5xl" />,
+      title: "Inspire Innovation",
       description:
-        "Even if you don't possess the technical skills to build a project, our platform empowers you to bring your innovative ideas to life. Hire a team of individuals who believe in your ideas and have the necessary skills to turn them into reality. We promote innovation and encourage the sharing of project credits among contributors.",
+        "Bring your innovative ideas to life, even if you lack the technical skills. Collab@IITH enables you to assemble a team of passionate individuals who share your vision and possess the expertise to transform ideas into reality.",
     },
     {
-      title: "Community Development",
+      icon: <FaHandshake className="text-indigo-600 text-5xl" />,
+      title: "Community Advancement",
       description:
-        "By focusing exclusively on the IITH Community, our platform contributes to the development and growth of the community itself. Through collaboration and support within our community, we create an environment where everyone benefits. The end results and profits generated through projects are shared among IITH students, fostering a sense of belonging and collective advancement.",
+        "By focusing exclusively on the IITH Community, our platform contributes to the development and growth of our collective potential. Together, we foster an environment of collaboration, sharing project credits, and nurturing a sense of collective advancement.",
     },
   ];
 
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+
+  const handleHover = (index: any) => {
+    setHoveredIndex(index);
+  };
+
+  const handleHoverEnd = () => {
+    setHoveredIndex(null);
+  };
+
   return (
-    <div className="bg-gray-100 py-10">
+    <motion.div
+      className="bg-gradient-to-b from-indigo-600 to-purple-600 py-10"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-6">
-          Our Motives and Aims
+        <h2 className="text-3xl font-bold text-white text-center mb-8">
+          Discover Collab@IITH
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {motives.map((motive, index) => (
-            <div
+            <motion.div
               key={index}
-              className="bg-white rounded-lg shadow-lg overflow-hidden transition duration-300 ease-in-out transform hover:scale-105"
+              className="bg-white rounded-lg p-8 flex items-center"
+              variants={itemVariants}
+              initial="hidden"
+              animate="visible"
+              whileHover="hover"
+              onHoverStart={() => handleHover(index)}
+              onHoverEnd={handleHoverEnd}
+              style={{ zIndex: hoveredIndex === index ? 2 : 1 }}
             >
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2 text-center">
+              <div className="flex-shrink-0 mr-4">{motive.icon}</div>
+              <div>
+                <h3 className="text-xl font-bold mb-2 text-gray-800">
                   {motive.title}
                 </h3>
-                <p className="text-center">{motive.description}</p>
+                <p className="text-lg text-gray-700">{motive.description}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
+        <p className="text-lg text-white text-center mt-8">
+          Join Collab@IITH today and unleash your collaborative potential.
+          Connect with a diverse community, inspire innovation, and contribute
+          to our collective advancement.
+        </p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
-export default MotivesAndAims;
+export default Whatis;

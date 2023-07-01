@@ -6,6 +6,7 @@ import {
   FaHandshake,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
+import router from "next/router";
 
 const Whatis = () => {
   const containerVariants = {
@@ -68,7 +69,7 @@ const Whatis = () => {
   };
 
   const handleButtonClick = () => {
-    // Handle button click event
+    router.push("/terms-and-conditions");
   };
 
   return (

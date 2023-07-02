@@ -64,7 +64,7 @@ const SavedProjects = (props: {
       {filteredSavedProjects.length === 0 && (
         <p className="mt-4 mb-4">
           No saved projects. You can save a project by going to the project
-          details page.
+          details page and hitting the love shape.
         </p>
       )}
     </>

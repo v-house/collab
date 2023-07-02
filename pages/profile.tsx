@@ -193,7 +193,7 @@ const Profile = (props: { session: any }) => {
               </div>
               <h2 className="text-xl font-bold mb-4">A Message for You</h2>
               <p className="text-lg">
-                And so are we happy for you! Let's go come together and
+                And so are we happy for you! Let's come together and
                 collaborate.
               </p>
 

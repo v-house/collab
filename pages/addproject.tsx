@@ -439,7 +439,7 @@ export default function AddProject() {
             />
             <span>
               I have read and agree to the{" "}
-              <Link href={"/"} legacyBehavior>
+              <Link href={"/terms-and-conditions"} legacyBehavior>
                 <a className="text-blue-500 underline">terms and conditions</a>
               </Link>{" "}
               to be followed by a project manager.

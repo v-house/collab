@@ -132,8 +132,8 @@ const Whatis = () => {
         </div>
         <p className="text-lg text-white text-center mt-8">
           Join Collab@IITH today and unleash your collaborative potential.
-          Connect with a diverse community, inspire innovation, and contribute
-          to our collective advancement.
+          Connect with the diverse IITH community, inspire innovation, and
+          contribute to our collective advancement.
         </p>
       </div>
     </motion.div>

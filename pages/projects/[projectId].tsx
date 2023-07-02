@@ -316,7 +316,7 @@ export default function ProjectDetails() {
                   rel="noopener noreferrer"
                   className="text-blue-500 hover:text-blue-700"
                 >
-                  Link
+                  Tap to view link
                 </a>
                 <button
                   onClick={() => {
@@ -406,7 +406,7 @@ export default function ProjectDetails() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Link for pending users
+                        Link for pending users (Tap to view)
                       </a>
                     </p>
                   )}
@@ -425,7 +425,7 @@ export default function ProjectDetails() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Link for rejected users
+                        Link for rejected users (Tap to view)
                       </a>
                     </p>
                   )}
@@ -448,7 +448,7 @@ export default function ProjectDetails() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Link for accepted users
+                        Link for accepted users (Tap to view)
                       </a>
                     </p>
                   )}

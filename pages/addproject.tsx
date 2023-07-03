@@ -201,7 +201,7 @@ export default function AddProject() {
 
   return (
     <div className="max-w-3xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Create Project</h1>
+      <h1 className="text-2xl font-bold mb-4">Create Collaboration</h1>
       <form onSubmit={handleSubmit}>
         <div className="mt-4">
           <label htmlFor="title" className="font-bold flex items-center">
@@ -242,7 +242,7 @@ export default function AddProject() {
 
         <div className="mt-4">
           <label htmlFor="typeOfPerson" className="block font-bold mb-1">
-            Type of Person to hire:
+            Type of team member required:
           </label>
           <Select
             id="typeOfPerson"
@@ -442,7 +442,7 @@ export default function AddProject() {
               <Link href={"/terms-and-conditions"} legacyBehavior>
                 <a className="text-blue-500 underline">terms and conditions</a>
               </Link>{" "}
-              to be followed by a project manager.
+              to be followed by a creator.
             </span>
           </label>
 

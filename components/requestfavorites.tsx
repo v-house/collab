@@ -12,7 +12,7 @@ const ReqFavorites = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           <h1 className="text-white text-base md:text-lg">
-            You can edit favorites roles to find projects easily.
+            You can edit favorites roles to find collaborations easily.
           </h1>
           <button
             className="px-3 py-1 bg-white text-purple-500 rounded-lg shadow text-sm"

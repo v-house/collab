@@ -138,10 +138,7 @@ export default function IndexPage() {
           </div>
         ))}
         <div className="p-4 text-center">
-          <p>
-            If your query is still unresolved, you can email us at
-            k.vivek.kumar.aka.vwake@gmail.com
-          </p>
+          <p>If your query is still unresolved, you can email us with that.</p>
         </div>
       </div>
     </div>

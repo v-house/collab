@@ -184,14 +184,14 @@ export default function ProjectDetails() {
   };
 
   const handleDeleteProject = async () => {
-    if (confirm("Are you sure you want to delete this project?")) {
+    if (confirm("Are you sure you want to delete this collaboration?")) {
       try {
         await axios.delete(`/api/projects/${projectId}/deleteProject`);
-        alert("Project deleted");
+        alert("Deleted successfully");
         router.push("/profile");
       } catch (error) {
-        console.error("Error deleting project:", error);
-        alert("Error deleting project");
+        // console.error("Error deleting:", error);
+        alert("Error deleting!!");
       }
     }
   };
@@ -210,7 +210,7 @@ export default function ProjectDetails() {
         <div className="max-w-md p-8 bg-white rounded-lg shadow-md">
           <img src="/favicon.ico" alt="Favicon" className="mb-4 mx-auto" />
           <h1 className="text-2xl font-bold text-center mb-8">
-            The project could have been deleted or temporarily erased.
+            The page could have been deleted or temporarily erased.
           </h1>
         </div>
       </div>
@@ -235,7 +235,7 @@ export default function ProjectDetails() {
         <div className="container mx-auto p-4">
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex justify-between items-center mb-4">
-              <h1 className="text-2xl font-bold">Project Details</h1>
+              <h1 className="text-2xl font-bold">Collaboration Details</h1>
               <button
                 onClick={() => handleSaveProject(project?._id)}
                 className="bg-transparent text-gray-800 hover:text-gray-600 p-1 rounded-full"
@@ -249,11 +249,11 @@ export default function ProjectDetails() {
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div>
-                <h2 className="text-lg font-bold">Project Title:</h2>
+                <h2 className="text-lg font-bold">Title:</h2>
                 <p>{project?.a}</p>
               </div>
               <div>
-                <h2 className="text-lg font-bold">Project Details:</h2>
+                <h2 className="text-lg font-bold">Details:</h2>
                 <p>{project?.b}</p>
               </div>
               <div>
@@ -294,11 +294,11 @@ export default function ProjectDetails() {
               </div>
 
               <div>
-                <h2 className="text-lg font-bold">Project Manager Name:</h2>
+                <h2 className="text-lg font-bold">Creator Name:</h2>
                 <p>{project?.g}</p>
               </div>
               <div>
-                <h2 className="text-lg font-bold">Project Manager Email:</h2>
+                <h2 className="text-lg font-bold">Creator Email:</h2>
                 <p>
                   <a
                     href={`mailto:${project?.g}`}
@@ -371,7 +371,7 @@ export default function ProjectDetails() {
 
         <div className="container mx-auto p-4">
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h1 className="text-2xl font-bold">Project Updates</h1>
+            <h1 className="text-2xl font-bold">Updates</h1>
 
             {project?.f !== userEmail &&
               !project?.h?.includes(userEmail) &&
@@ -437,7 +437,7 @@ export default function ProjectDetails() {
               <>
                 <div className="mt-4">
                   <p className="text-green-500">
-                    You are accepted. Contact the project manager: {project?.g}
+                    You are accepted. Contact the creator: {project?.g}
                   </p>
                 </div>
                 <div className="mt-4">
@@ -545,7 +545,7 @@ export default function ProjectDetails() {
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                     onClick={handleDeleteProject}
                   >
-                    Delete Project
+                    Delete
                   </button>
                 </div>
               </div>

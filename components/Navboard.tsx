@@ -30,7 +30,7 @@ const Navboard = () => {
           <div className="flex justify-center flex-grow">
             <div className="flex space-x-4">
               <NavLink href="/projects" label="Available" />
-              <NavLink href="/addproject" label="Create" />
+              <NavLink href="/addproject" label="Create Now" />
               <NavLink href="/profile" label="Profile" />
             </div>
           </div>
